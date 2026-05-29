@@ -405,7 +405,9 @@ textarea.field-input{resize:vertical;min-height:70px;line-height:1.5;}
 
 <script>
 const ADMIN_PW='Mypassislbd1813!';
-const STORAGE_KEY='lbd_v4';
+const JSONBIN_KEY='$2a$10$8fLozsm78KbjkbdnKQ7gtOyMgpFtsIRdjnmG7Sx91CSxAaaR.IRB6';
+const JSONBIN_BIN='6a19ffa221f9ee59d29b9b60';
+const JSONBIN_URL='https://api.jsonbin.io/v3/b/'+JSONBIN_BIN;
 
 const SOCIAL_DEFS={
   instagram:{label:'Instagram',ph:'https://instagram.com/lunchboxdad',icon:'<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke-width="2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2.5"/></svg>'},
@@ -431,20 +433,84 @@ let data={
 };
 
 let editingId=null,editingType='link',dragSrc=null,dragList=null;
+let isSaving=false;
 
-function loadData(){try{const s=localStorage.getItem(STORAGE_KEY);if(s)data=JSON.parse(s);}catch(e){}}
-function saveData(){localStorage.setItem(STORAGE_KEY,JSON.stringify(data));}
+async function unlockBin(){
+  try{
+    await fetch('https://api.jsonbin.io/v3/b/'+JSONBIN_BIN+'/meta/privacy',{
+      method:'PUT',
+      headers:{
+        'Content-Type':'application/json',
+        'X-Master-Key':JSONBIN_KEY
+      },
+      body:JSON.stringify({"private":false})
+    });
+  }catch(e){console.warn('Could not unlock bin',e);}
+}
+
+async function loadData(){
+  try{
+    showPageLoading(true);
+    await unlockBin();
+    const res=await fetch(JSONBIN_URL+'/latest',{
+      method:'GET',
+      headers:{
+        'X-Master-Key':JSONBIN_KEY,
+        'X-Bin-Meta':'false'
+      }
+    });
+    if(res.ok){
+      const json=await res.json();
+      if(json && typeof json==='object'){
+        if(json.profile) data=json;
+        else if(json.record && json.record.profile) data=json.record;
+      }
+    } else {
+      console.warn('JSONbin responded with',res.status,await res.text());
+    }
+  }catch(e){console.warn('Could not load from JSONbin, using defaults',e);}
+  finally{showPageLoading(false);}
+}
+
+async function saveData(){
+  if(isSaving) return;
+  isSaving=true;
+  try{
+    const res=await fetch(JSONBIN_URL,{
+      method:'PUT',
+      headers:{
+        'Content-Type':'application/json',
+        'X-Master-Key':JSONBIN_KEY
+      },
+      body:JSON.stringify(data)
+    });
+    if(!res.ok) throw new Error('Save failed: '+res.status);
+  }catch(e){console.warn('Could not save to JSONbin',e);showToast('Save failed — check connection');}
+  finally{isSaving=false;}
+}
+
+function showPageLoading(show){
+  let el=document.getElementById('page-loading');
+  if(!el){
+    el=document.createElement('div');
+    el.id='page-loading';
+    el.style.cssText='position:fixed;inset:0;background:var(--teal-pale);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;gap:12px;';
+    el.innerHTML='<div style="width:36px;height:36px;border:3px solid var(--teal-lt);border-top-color:var(--teal);border-radius:50%;animation:spin 0.7s linear infinite"></div><div style="font-family:Nunito,sans-serif;font-size:14px;font-weight:700;color:var(--teal-dk)">Loading your page…</div><style>@keyframes spin{to{transform:rotate(360deg)}}</style>';
+    document.body.appendChild(el);
+  }
+  el.style.display=show?'flex':'none';
+}
 
 /* ── AUTO-SAVE PROFILE ── */
-function autoSaveProfile(){
+async function autoSaveProfile(){
   data.profile.name   = document.getElementById('admin-name').value;
   data.profile.handle = document.getElementById('admin-handle').value;
   data.profile.bio    = document.getElementById('admin-bio').value;
   data.profile.email  = document.getElementById('admin-email').value;
   data.profile.hero   = document.getElementById('admin-hero').value;
-  saveData();
   renderPublic();
   updateHeroPreview();
+  await saveData();
 }
 
 function updateHeroPreview(){
@@ -594,7 +660,7 @@ function renderAdminLinks(){
   });
 }
 function toggleLinkVisible(idx){data.links[idx].visible=!data.links[idx].visible;saveData();renderAdminLinks();renderPublic();}
-function deleteLink(idx){if(!confirm('Delete "'+data.links[idx].title+'"?'))return;data.links.splice(idx,1);saveData();renderAdminLinks();renderPublic();showToast('Link deleted');}
+async function deleteLink(idx){if(!confirm('Delete "'+data.links[idx].title+'"?'))return;data.links.splice(idx,1);await saveData();renderAdminLinks();renderPublic();showToast('Link deleted');}
 
 /* ── DRAG & DROP ── */
 function bindDrag(el,listName,idx){
@@ -729,13 +795,13 @@ function handleThumbUpload(e){
     const dataUrl = ev.target.result;
     document.getElementById('edit-thumb').value = dataUrl;
     previewThumb();
-    setFetchStatus('success','Photo uploaded! It\'s stored locally in this file.');
+    setFetchStatus('success','Photo uploaded and ready — hit Save link to store it.');
   };
   reader.readAsDataURL(file);
   e.target.value = '';
 }
 
-function saveLink(){
+async function saveLink(){
   const title=document.getElementById('edit-title').value.trim();
   if(!title){alert('Please enter a title.');return;}
   let url=document.getElementById('edit-url').value.trim();
@@ -744,7 +810,7 @@ function saveLink(){
   const thumb=document.getElementById('edit-thumb').value.trim();
   if(editingId){const idx=data.links.findIndex(l=>l.id===editingId);if(idx>-1)data.links[idx]={...data.links[idx],type:editingType,title,desc,url,thumb};}
   else{data.links.push({id:'l'+Date.now(),type:editingType,title,desc,url,thumb,visible:true});}
-  saveData();renderAdminLinks();renderPublic();closeEditModal();
+  await saveData();renderAdminLinks();renderPublic();closeEditModal();
   showToast(editingId?'Link updated!':'Link added!');
 }
 
@@ -801,8 +867,7 @@ function previewPublic(){logout();}
 /* ── TOAST ── */
 function showToast(msg){const t=document.getElementById('toast');document.getElementById('toast-msg').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 
-loadData();
-renderPublic();
+loadData().then(()=>renderPublic());
 </script>
 </body>
 </html>

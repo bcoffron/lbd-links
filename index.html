@@ -28,7 +28,7 @@ body{font-family:'Nunito Sans',sans-serif;background:var(--page-bg);min-height:1
 .hero-bg-placeholder svg{width:80px;height:80px;color:#444;}
 .hero-scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.80) 0%,rgba(0,0,0,0.35) 55%,rgba(0,0,0,0.05) 100%);}
 .hero-text{position:absolute;bottom:0;left:0;right:0;padding:20px 24px 24px;}
-.hero-name{font-family:'Nunito',sans-serif;font-size:28px;font-weight:900;color:#ffffff;line-height:1.1;letter-spacing:-0.5px;text-shadow:0 1px 8px rgba(0,0,0,0.4);}
+.hero-name{font-family:'Nunito',sans-serif;font-size:28px;font-weight:900;color:#ffffff;line-height:1.1;letter-spacing:-0.5px;text-shadow:0 1px 8px rgba(0,0,0,0.4);white-space:pre-line;}
 .hero-handle{font-size:14px;font-weight:600;color:rgba(255,255,255,0.72);margin-top:4px;text-shadow:0 1px 4px rgba(0,0,0,0.4);}
 
 /* ── BELOW HERO (white card area) ── */
@@ -38,10 +38,11 @@ body{font-family:'Nunito Sans',sans-serif;background:var(--page-bg);min-height:1
 .pub-email{font-size:13px;font-weight:700;color:var(--teal-dk);letter-spacing:0.1px;}
 
 /* ── SOCIAL PILLS ── */
-.social-row{display:flex;justify-content:flex-start;gap:8px;flex-wrap:wrap;padding-bottom:20px;border-bottom:1px solid var(--border);}
-.social-pill{display:flex;align-items:center;gap:6px;background:white;border:1.5px solid var(--border);border-radius:30px;padding:7px 14px;font-size:12px;font-weight:700;color:var(--teal-dk);text-decoration:none;transition:all 0.18s ease;cursor:pointer;}
+.social-row{display:flex;justify-content:flex-start;gap:6px;padding-bottom:20px;border-bottom:1px solid var(--border);flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;}
+.social-row::-webkit-scrollbar{display:none;}
+.social-pill{display:flex;align-items:center;gap:4px;background:white;border:1.5px solid var(--border);border-radius:30px;padding:5px 10px;font-size:11px;font-weight:700;color:var(--teal-dk);text-decoration:none;transition:all 0.18s ease;cursor:pointer;white-space:nowrap;flex-shrink:0;}
 .social-pill:hover{background:var(--teal);border-color:var(--teal);color:white;transform:translateY(-1px);}
-.social-pill svg{width:14px;height:14px;flex-shrink:0;}
+.social-pill svg{width:13px;height:13px;flex-shrink:0;}
 
 /* ── LINKS SECTION ── */
 .section-label{font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--teal-dk);padding:16px 20px 8px;}
@@ -248,7 +249,8 @@ textarea.field-input{resize:vertical;min-height:70px;line-height:1.5;}
     <div class="field-group">
       <div class="field">
         <label class="field-label">Display name</label>
-        <input class="field-input" id="admin-name" type="text" value="Beau Coffron" oninput="autoSaveProfile()">
+        <textarea class="field-input" id="admin-name" rows="2" placeholder="Beau Coffron&#10;The Lunchbox Dad" oninput="autoSaveProfile()" style="min-height:60px;resize:none"></textarea>
+        <div class="field-hint">Press Enter to add a line break in your name on the photo.</div>
       </div>
       <div class="field">
         <label class="field-label">Handle</label>
@@ -614,7 +616,7 @@ function getTypeIcon(type){
 
 /* ── RENDER ADMIN ── */
 function renderAdmin(){
-  document.getElementById('admin-name').value   = data.profile.name;
+  document.getElementById('admin-name').value   = data.profile.name||'';
   document.getElementById('admin-handle').value = data.profile.handle;
   document.getElementById('admin-bio').value    = data.profile.bio;
   document.getElementById('admin-email').value  = data.profile.email||'';

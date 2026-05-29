@@ -265,7 +265,7 @@ textarea.field-input{resize:vertical;min-height:70px;line-height:1.5;}
       <div class="field">
         <label class="field-label">Hero photo URL</label>
         <input class="field-input" id="admin-hero" type="url" placeholder="https://…" oninput="autoSaveProfile()">
-        <div class="field-hint">Paste a direct image URL — your photo will fill the top of the page. Works great with your kitchen/headshot photo.</div>
+        <div class="field-hint">Paste a direct image URL — your photo will fill the top of the page.</div>
         <div class="hero-preview-wrap" id="hero-preview-wrap">
           <div class="hero-preview-ph" id="hero-preview-ph">No photo set yet</div>
           <img class="hero-preview-img" id="hero-preview-img" src="" alt="" onerror="this.style.display='none';document.getElementById('hero-preview-ph').style.display='flex'">
@@ -276,6 +276,7 @@ textarea.field-input{resize:vertical;min-height:70px;line-height:1.5;}
           </div>
         </div>
       </div>
+      <button class="btn-primary" onclick="saveProfileNow()" style="margin-top:4px">Save profile changes</button>
     </div>
   </div>
 
@@ -287,6 +288,10 @@ textarea.field-input{resize:vertical;min-height:70px;line-height:1.5;}
         Social profiles
         <span class="admin-section-hint">(drag to reorder · toggle to show/hide)</span>
       </div>
+      <button class="btn-teal-sm" onclick="saveSocialsNow()">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        Save
+      </button>
     </div>
     <div id="social-admin-list"></div>
   </div>
@@ -510,7 +515,18 @@ async function autoSaveProfile(){
   data.profile.hero   = document.getElementById('admin-hero').value;
   renderPublic();
   updateHeroPreview();
+}
+
+async function saveProfileNow(){
+  data.profile.name   = document.getElementById('admin-name').value;
+  data.profile.handle = document.getElementById('admin-handle').value;
+  data.profile.bio    = document.getElementById('admin-bio').value;
+  data.profile.email  = document.getElementById('admin-email').value;
+  data.profile.hero   = document.getElementById('admin-hero').value;
+  renderPublic();
+  updateHeroPreview();
   await saveData();
+  showToast('Profile saved!');
 }
 
 function updateHeroPreview(){
@@ -571,7 +587,7 @@ function renderPublic(){
     card.target=link.type==='email'?'_self':'_blank';
     card.rel='noopener';
     const thumbHtml=link.thumb
-      ?`<div class="link-thumb"><img src="${link.thumb}" alt="${link.title}" onerror="this.parentNode.innerHTML='${getTypeIcon(link.type)}'"></div>`
+      ?`<div class="link-thumb"><img src="${link.thumb}" alt="${link.title}" onerror="this.style.display='none';this.parentNode.style.background='var(--teal-lt)'"></div>`
       :`<div class="link-thumb-icon">${getTypeIcon(link.type)}</div>`;
     card.innerHTML=thumbHtml+`<div class="link-info"><div class="link-title">${link.title}</div>${link.desc?`<div class="link-desc">${link.desc}</div>`:''}</div><div class="link-arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg></div>`;
     ll.appendChild(card);
@@ -631,8 +647,16 @@ function renderAdminSocials(){
     list.appendChild(row);
   });
 }
-function autoSaveSocial(key){data.socialValues[key]=document.getElementById('social-input-'+key).value;saveData();renderPublic();}
+function autoSaveSocial(key){data.socialValues[key]=document.getElementById('social-input-'+key).value;renderPublic();}
 function toggleSocialVisible(key){data.socialVisible[key]=!data.socialVisible[key];saveData();renderPublic();}
+async function saveSocialsNow(){
+  SOCIAL_DEFS && Object.keys(SOCIAL_DEFS).forEach(key=>{
+    const el=document.getElementById('social-input-'+key);
+    if(el) data.socialValues[key]=el.value;
+  });
+  await saveData();
+  showToast('Socials saved!');
+}
 
 /* ── LINKS ADMIN (draggable) ── */
 function renderAdminLinks(){
@@ -644,7 +668,7 @@ function renderAdminLinks(){
     item.className='drag-row'; item.draggable=true;
     item.dataset.idx=idx; item.dataset.list='links';
     const thumbHtml=link.thumb
-      ?`<div class="link-admin-thumb"><img src="${link.thumb}" alt="" onerror="this.style.display='none';this.parentNode.innerHTML='${getTypeIconAdmin(link.type)}'"></div>`
+      ?`<div class="link-admin-thumb"><img src="${link.thumb}" alt="" onerror="this.style.display='none'"></div>`
       :`<div class="link-admin-thumb">${getTypeIconAdmin(link.type)}</div>`;
     item.innerHTML=`
       <div class="drag-handle" title="Drag to reorder"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"/></svg></div>

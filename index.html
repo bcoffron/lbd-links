@@ -578,6 +578,12 @@ function renderPublic(){
   });
 }
 
+function getTypeIconAdmin(type){
+  const icons={
+    blog:'📝', email:'✉️', video:'▶️', shop:'🛍️', link:'🔗', other:'•'
+  };
+  return `<span style="font-size:20px;line-height:1">${icons[type]||icons.link}</span>`;
+}
 function getTypeIcon(type){
   const icons={
     blog:`<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:24px;height:24px;color:var(--teal-dk)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>`,
@@ -638,8 +644,8 @@ function renderAdminLinks(){
     item.className='drag-row'; item.draggable=true;
     item.dataset.idx=idx; item.dataset.list='links';
     const thumbHtml=link.thumb
-      ?`<div class="link-admin-thumb"><img src="${link.thumb}" alt=""></div>`
-      :`<div class="link-admin-thumb">${getTypeIcon(link.type).replace(/width:24px;height:24px/g,'width:18px;height:18px')}</div>`;
+      ?`<div class="link-admin-thumb"><img src="${link.thumb}" alt="" onerror="this.style.display='none';this.parentNode.innerHTML='${getTypeIconAdmin(link.type)}'"></div>`
+      :`<div class="link-admin-thumb">${getTypeIconAdmin(link.type)}</div>`;
     item.innerHTML=`
       <div class="drag-handle" title="Drag to reorder"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"/></svg></div>
       ${thumbHtml}
@@ -720,52 +726,48 @@ async function autoFetchThumb(){
 
   const isInstagram = url.includes('instagram.com');
   if(isInstagram){
-    setFetchStatus('warn','Instagram blocks auto-fetch. Upload your own thumbnail instead — screenshot the post and use the Upload button.');
+    setFetchStatus('warn','Instagram blocks auto-fetch. Upload your own thumbnail instead.');
     return;
   }
 
   setFetchStatus('loading','Fetching image from URL…');
   document.getElementById('auto-fetch-btn').disabled = true;
 
-  try {
-    const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(url);
-    const res = await fetch(proxyUrl);
-    const data = await res.json();
-    const html = data.contents || '';
+  let imgUrl = '';
 
-    let imgUrl = '';
+  const proxies = [
+    'https://api.allorigins.win/get?url=',
+    'https://api.codetabs.com/v1/proxy?quest='
+  ];
 
-    const ogMatch = html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i)
-                 || html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i);
-    if(ogMatch) imgUrl = ogMatch[1];
+  for(const proxy of proxies){
+    try{
+      const res = await fetch(proxy + encodeURIComponent(url));
+      const json = proxy.includes('allorigins') ? await res.json() : null;
+      const html = json ? (json.contents||'') : await res.text();
+      if(!html) continue;
 
-    if(!imgUrl){
-      const twitterMatch = html.match(/<meta[^>]+name=["']twitter:image["'][^>]+content=["']([^"']+)["']/i)
-                        || html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+name=["']twitter:image["']/i);
-      if(twitterMatch) imgUrl = twitterMatch[1];
+      const ogMatch = html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i)
+                   || html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i);
+      if(ogMatch){ imgUrl = ogMatch[1]; break; }
+
+      const twMatch = html.match(/<meta[^>]+name=["']twitter:image["'][^>]+content=["']([^"']+)["']/i)
+                   || html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+name=["']twitter:image["']/i);
+      if(twMatch){ imgUrl = twMatch[1]; break; }
+    }catch(e){ continue; }
+  }
+
+  if(imgUrl){
+    if(imgUrl.startsWith('//')){
+      imgUrl = 'https:' + imgUrl;
+    } else if(imgUrl.startsWith('/')){
+      try{ imgUrl = new URL(url).origin + imgUrl; }catch(e){}
     }
-
-    if(!imgUrl){
-      const firstImg = html.match(/<img[^>]+src=["']([^"']+\.(jpg|jpeg|png|webp)[^"']*)["']/i);
-      if(firstImg) imgUrl = firstImg[1];
-    }
-
-    if(imgUrl){
-      if(imgUrl.startsWith('//')){
-        const base = new URL(url);
-        imgUrl = base.protocol + imgUrl;
-      } else if(imgUrl.startsWith('/')){
-        const base = new URL(url);
-        imgUrl = base.origin + imgUrl;
-      }
-      document.getElementById('edit-thumb').value = imgUrl;
-      previewThumb();
-      setFetchStatus('success','Image found! Check the preview and save if it looks good.');
-    } else {
-      setFetchStatus('warn','No image found on that page. Try uploading your own thumbnail instead.');
-    }
-  } catch(e){
-    setFetchStatus('error','Could not reach that URL. Try pasting the image URL directly or upload your own.');
+    document.getElementById('edit-thumb').value = imgUrl;
+    previewThumb();
+    setFetchStatus('success','Image found! Check the preview below.');
+  } else {
+    setFetchStatus('warn','No image found — paste the image URL directly or upload your own.');
   }
 
   document.getElementById('auto-fetch-btn').disabled = false;
@@ -820,17 +822,30 @@ function closeLogin(){document.getElementById('login-modal').classList.remove('o
 function doLogin(){
   if(document.getElementById('pw-input').value===ADMIN_PW){
     closeLogin();
-    document.getElementById('public-page').style.display='none';
-    document.getElementById('admin-panel').style.display='block';
-    renderAdmin();
+    localStorage.setItem('lbd_session','1');
+    enterAdmin();
   } else {
     document.getElementById('login-error').style.display='block';
     document.getElementById('pw-input').value='';
     document.getElementById('pw-input').focus();
   }
 }
-function logout(){document.getElementById('admin-panel').style.display='none';document.getElementById('public-page').style.display='block';renderPublic();}
-function previewPublic(){logout();}
+function enterAdmin(){
+  document.getElementById('public-page').style.display='none';
+  document.getElementById('admin-panel').style.display='block';
+  renderAdmin();
+}
+function logout(){
+  localStorage.removeItem('lbd_session');
+  document.getElementById('admin-panel').style.display='none';
+  document.getElementById('public-page').style.display='block';
+  renderPublic();
+}
+function previewPublic(){
+  document.getElementById('admin-panel').style.display='none';
+  document.getElementById('public-page').style.display='block';
+  renderPublic();
+}
 
 /* ── LONG-PRESS FOOTER TO OPEN ADMIN ── */
 (function(){
@@ -867,7 +882,12 @@ function previewPublic(){logout();}
 /* ── TOAST ── */
 function showToast(msg){const t=document.getElementById('toast');document.getElementById('toast-msg').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 
-loadData().then(()=>renderPublic());
+loadData().then(()=>{
+  renderPublic();
+  if(localStorage.getItem('lbd_session')==='1'){
+    enterAdmin();
+  }
+});
 </script>
 </body>
 </html>

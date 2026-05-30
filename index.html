@@ -4,184 +4,254 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lunchbox Dad | Links</title>
+<meta name="description" content="Food Art + Recipes · Creative lunches · Making food fun & affordable for families since 2012 · Oklahoma City">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Fraunces:ital,wght@0,400;0,700;1,400;1,700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Schema.org structured data for SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://www.lunchboxdad.com/#beau-coffron",
+      "name": "Beau Coffron",
+      "alternateName": "The Lunchbox Dad",
+      "description": "Food Art + Recipes · Creative lunches · Making food fun & affordable for families since 2012 · Oklahoma City",
+      "url": "https://www.lunchboxdad.com",
+      "image": "https://www.lunchboxdad.com/favicon.ico",
+      "sameAs": [
+        "https://instagram.com/lunchboxdad",
+        "https://youtube.com/lunchboxdad",
+        "https://facebook.com/lunchboxdad",
+        "https://pinterest.com/lunchboxdad",
+        "https://twitter.com/lunchboxdad",
+        "https://tiktok.com/@lunchboxdad",
+        "https://threads.net/@lunchboxdad"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Oklahoma City",
+        "addressRegion": "OK",
+        "addressCountry": "US"
+      },
+      "knowsAbout": ["Food art", "Bento boxes", "Family meal planning", "Creative lunches", "Recipe development"]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.lunchboxdad.com/p/links.html",
+      "url": "https://www.lunchboxdad.com/p/links.html",
+      "name": "Lunchbox Dad | Links",
+      "description": "Links page for Beau Coffron, The Lunchbox Dad — Food Art + Recipes",
+      "about": {"@id": "https://www.lunchboxdad.com/#beau-coffron"},
+      "author": {"@id": "https://www.lunchboxdad.com/#beau-coffron"}
+    }
+  ]
+}
+</script>
+
 <style>
+/* ── DESIGN TOKENS ── */
 :root {
-  --teal:#2DC5BE;--teal-dk:#1A9E98;--teal-lt:#D0F5F3;--teal-pale:#F0FBFB;
-  --white:#ffffff;--page-bg:#F0FBFB;--text:#1A2E2D;--text-mid:#4A6E6C;--text-light:#8AADAB;
-  --border:#C8EDEB;--card-bg:#ffffff;
-  --shadow:0 2px 12px rgba(45,197,190,0.10);--shadow-hover:0 6px 24px rgba(45,197,190,0.18);
-  --radius:16px;--radius-sm:10px;
+  --burg:#C41E3A; --burg-dk:#9B1730; --burg-lt:#F5E8EC;
+  --cream:#FAF7F2; --cream-dk:#F0EAE0; --cream-border:#E8DDD0;
+  --ink:#1a0a0a; --ink-mid:#5a4a42; --ink-lt:#9a8a82;
+  --white:#ffffff;
+  --shadow:0 2px 12px rgba(26,10,10,0.08);
+  --shadow-hover:0 6px 24px rgba(26,10,10,0.14);
+  --radius:12px;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Nunito Sans',sans-serif;background:var(--page-bg);min-height:100vh;color:var(--text);}
+body{font-family:'Outfit',sans-serif;background:var(--cream);min-height:100vh;color:var(--ink);}
 
 /* ── PUBLIC PAGE ── */
 #public-page{max-width:480px;margin:0 auto;padding:0 0 60px;}
 
-/* ── HERO PHOTO HEADER ── */
-.hero-header{position:relative;width:100%;height:320px;overflow:hidden;background:#1a1a1a;flex-shrink:0;}
-.hero-bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
-.hero-bg-placeholder{position:absolute;inset:0;background:#2a2a2a;display:flex;align-items:center;justify-content:center;}
-.hero-bg-placeholder svg{width:80px;height:80px;color:#444;}
-.hero-scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.80) 0%,rgba(0,0,0,0.35) 55%,rgba(0,0,0,0.05) 100%);}
-.hero-text{position:absolute;bottom:0;left:0;right:0;padding:20px 24px 24px;}
-.hero-name{font-family:'Nunito',sans-serif;font-size:28px;font-weight:900;color:#ffffff;line-height:1.1;letter-spacing:-0.5px;text-shadow:0 1px 8px rgba(0,0,0,0.4);white-space:pre-line;}
-.hero-handle{font-size:14px;font-weight:600;color:rgba(255,255,255,0.72);margin-top:4px;text-shadow:0 1px 4px rgba(0,0,0,0.4);}
+/* ── HERO PHOTO ── */
+.hero-photo{width:100%;height:300px;overflow:hidden;position:relative;background:#111;flex-shrink:0;}
+.hero-photo img{width:100%;height:100%;object-fit:cover;object-position:center 15%;display:block;}
+.hero-photo-ph{position:absolute;inset:0;background:#222;display:flex;align-items:center;justify-content:center;}
+.hero-photo-ph svg{width:60px;height:60px;color:#444;}
 
-/* ── BELOW HERO (white card area) ── */
-.below-hero{background:#ffffff;padding:20px 20px 0;}
-.bio-block{margin-bottom:14px;}
-.pub-bio{font-size:13px;color:var(--text-mid);line-height:1.6;margin-bottom:6px;}
-.pub-email{font-size:13px;font-weight:700;color:var(--teal-dk);letter-spacing:0.1px;}
+/* ── BURGUNDY ACCENT LINE (between photo and name bar) ── */
+.accent-line-top{height:5px;background:var(--burg);display:block;width:100%;flex-shrink:0;}
+
+/* ── NAME BAR ── */
+.name-bar{
+  background:var(--cream);
+  padding:14px 20px 12px;
+  border-bottom:2px solid var(--burg);
+}
+.profile-name{font-family:'DM Serif Display',serif;font-size:24px;font-weight:400;color:var(--ink);line-height:1.05;font-style:italic;}
+.profile-handle{font-size:12px;color:var(--ink-lt);margin-top:4px;letter-spacing:1px;text-transform:uppercase;font-family:'Outfit',sans-serif;font-weight:400;}
+
+/* ── CONTENT AREA ── */
+.content-area{background:var(--cream);padding:16px 20px 0;}
+.bio-text{font-family:'Fraunces',serif;font-size:13px;color:var(--ink-mid);line-height:1.7;font-style:italic;border-left:2px solid var(--burg);padding-left:10px;margin-bottom:10px;}
+.pub-email{font-size:15px;font-weight:700;color:var(--burg);letter-spacing:.2px;margin-bottom:14px;font-family:'Outfit',sans-serif;}
 
 /* ── SOCIAL PILLS ── */
-.social-row{display:flex;justify-content:flex-start;gap:6px;padding-bottom:20px;border-bottom:1px solid var(--border);flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;}
+.social-row{display:flex;gap:7px;overflow-x:auto;padding-bottom:16px;border-bottom:1px solid var(--cream-border);-webkit-overflow-scrolling:touch;scrollbar-width:none;}
 .social-row::-webkit-scrollbar{display:none;}
-.social-pill{display:flex;align-items:center;gap:4px;background:white;border:1.5px solid var(--border);border-radius:30px;padding:5px 10px;font-size:11px;font-weight:700;color:var(--teal-dk);text-decoration:none;transition:all 0.18s ease;cursor:pointer;white-space:nowrap;flex-shrink:0;}
-.social-pill:hover{background:var(--teal);border-color:var(--teal);color:white;transform:translateY(-1px);}
+.social-pill{display:flex;align-items:center;gap:5px;background:var(--white);border:1px solid var(--cream-border);padding:6px 12px;font-size:11px;font-weight:700;color:var(--ink-mid);text-decoration:none;transition:all .18s ease;cursor:pointer;white-space:nowrap;font-family:'Outfit',sans-serif;letter-spacing:.3px;flex-shrink:0;}
+.social-pill:hover{background:var(--burg);border-color:var(--burg);color:var(--white);transform:translateY(-1px);}
 .social-pill svg{width:13px;height:13px;flex-shrink:0;}
 
-/* ── LINKS SECTION ── */
-.section-label{font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--teal-dk);padding:16px 20px 8px;}
-.links-list{display:flex;flex-direction:column;gap:12px;padding:4px 16px 0;}
-.link-card{background:var(--card-bg);border-radius:var(--radius);border:1.5px solid var(--border);display:flex;align-items:center;gap:14px;padding:12px 16px 12px 12px;text-decoration:none;color:var(--text);box-shadow:var(--shadow);transition:all 0.2s ease;cursor:pointer;position:relative;overflow:hidden;}
-.link-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--teal);border-radius:4px 0 0 4px;opacity:0;transition:opacity 0.2s;}
-.link-card:hover{box-shadow:var(--shadow-hover);border-color:var(--teal);transform:translateY(-2px);}
+/* ── FEATURED CARD ── */
+.featured-wrap{margin:16px 16px 0;position:relative;}
+.featured-label{font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;color:var(--burg);letter-spacing:1.2px;text-transform:uppercase;position:absolute;top:-7px;left:10px;background:var(--cream);padding:0 5px;z-index:1;}
+.featured-card{display:flex;align-items:center;gap:14px;padding:14px 16px 14px 14px;text-decoration:none;color:var(--ink);cursor:pointer;border:1.5px solid var(--burg);background:var(--white);position:relative;overflow:hidden;transition:box-shadow .18s ease,transform .15s ease;}
+.featured-card:hover{box-shadow:0 4px 20px rgba(196,30,58,.15);transform:translateY(-1px);}
+.featured-thumb{width:64px;height:64px;flex-shrink:0;background:var(--cream-dk);overflow:hidden;}
+.featured-thumb img{width:100%;height:100%;object-fit:cover;}
+.featured-thumb-icon{width:64px;height:64px;flex-shrink:0;background:var(--cream-dk);display:flex;align-items:center;justify-content:center;}
+.featured-thumb-icon svg{width:24px;height:24px;color:var(--ink-mid);}
+.featured-info{flex:1;min-width:0;}
+.featured-title{font-family:'DM Serif Display',serif;font-size:16px;font-weight:400;color:var(--ink);line-height:1.3;margin-bottom:4px;font-style:italic;}
+.featured-desc{font-size:11px;color:var(--ink-lt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'Outfit',sans-serif;}
+.featured-arrow{flex-shrink:0;color:var(--ink-mid);}
+.featured-arrow svg{width:18px;height:18px;}
+
+/* ── SECTION LABEL ── */
+.section-label{font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--burg);padding:16px 20px 8px;}
+
+/* ── LINK CARDS ── */
+.links-list{display:flex;flex-direction:column;gap:10px;padding:4px 16px 0;}
+.link-card{background:var(--white);border:1px solid var(--cream-border);display:flex;align-items:center;gap:12px;padding:10px 14px 10px 10px;text-decoration:none;color:var(--ink);box-shadow:var(--shadow);transition:all .2s ease;cursor:pointer;position:relative;overflow:hidden;}
+.link-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--burg);opacity:0;transition:opacity .2s;}
+.link-card:hover{box-shadow:var(--shadow-hover);border-color:var(--burg);transform:translateY(-1px);}
 .link-card:hover::before{opacity:1;}
-.link-thumb{width:56px;height:56px;border-radius:10px;object-fit:cover;flex-shrink:0;background:var(--teal-lt);display:flex;align-items:center;justify-content:center;overflow:hidden;}
-.link-thumb img{width:100%;height:100%;object-fit:cover;border-radius:10px;}
-.link-thumb-icon{width:56px;height:56px;border-radius:10px;background:var(--teal-lt);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.link-thumb-icon svg{width:24px;height:24px;color:var(--teal-dk);}
+.link-thumb{width:52px;height:52px;object-fit:cover;flex-shrink:0;background:var(--cream-dk);display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.link-thumb img{width:100%;height:100%;object-fit:cover;}
+.link-thumb-icon{width:52px;height:52px;background:var(--cream-dk);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.link-thumb-icon svg{width:22px;height:22px;color:var(--ink-mid);}
 .link-info{flex:1;min-width:0;}
-.link-title{font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;color:var(--text);line-height:1.3;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.link-desc{font-size:12px;color:var(--text-mid);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.link-arrow{color:var(--teal);flex-shrink:0;}
-.link-arrow svg{width:18px;height:18px;}
+.link-title{font-family:'DM Serif Display',serif;font-size:14px;font-weight:400;color:var(--ink);line-height:1.3;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-style:italic;}
+.link-desc{font-size:11px;color:var(--ink-lt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'Outfit',sans-serif;}
+.link-arrow{color:var(--burg);flex-shrink:0;}
+.link-arrow svg{width:16px;height:16px;}
 
-.page-footer{text-align:center;padding:28px 24px;font-size:11px;color:var(--text-light);}
+/* ── FOOTER ── */
+.page-footer{text-align:center;padding:28px 20px;font-size:10px;color:var(--ink-lt);font-family:'Outfit',sans-serif;letter-spacing:.5px;text-transform:uppercase;}
 
-/* ── ADMIN TRIGGER ── */
-.admin-trigger{display:none;}
+/* ── ADMIN TRIGGER (long-press footer only — no visible button) ── */
+#admin-trigger-btn{display:none;}
 
 /* ── MODALS ── */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,40,38,0.55);z-index:200;align-items:flex-end;justify-content:center;}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(26,10,10,0.6);z-index:200;align-items:flex-end;justify-content:center;}
 .modal-overlay.open{display:flex;}
-.slide-panel{background:white;border-radius:24px 24px 0 0;padding:28px 20px 40px;width:100%;max-width:480px;animation:slideUp 0.25s ease;max-height:88vh;overflow-y:auto;}
+.slide-panel{background:var(--white);border-radius:20px 20px 0 0;padding:26px 20px 40px;width:100%;max-width:480px;animation:slideUp .25s ease;max-height:90vh;overflow-y:auto;}
 @keyframes slideUp{from{transform:translateY(100%);opacity:0;}to{transform:translateY(0);opacity:1;}}
-.panel-title{font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;color:var(--text);margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;}
-.panel-sub{font-size:13px;color:var(--text-mid);margin-bottom:22px;}
-.close-btn{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--border);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-mid);flex-shrink:0;}
-.close-btn:hover{background:var(--teal-lt);border-color:var(--teal);color:var(--teal-dk);}
-.close-btn svg{width:16px;height:16px;}
+.panel-title{font-family:'DM Serif Display',serif;font-size:20px;font-weight:400;color:var(--ink);margin-bottom:5px;display:flex;align-items:center;justify-content:space-between;font-style:italic;}
+.panel-sub{font-size:13px;color:var(--ink-mid);margin-bottom:20px;font-family:'Outfit',sans-serif;}
+.close-btn{width:30px;height:30px;border:1px solid var(--cream-border);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink-mid);flex-shrink:0;}
+.close-btn:hover{background:var(--burg-lt);border-color:var(--burg);color:var(--burg);}
+.close-btn svg{width:15px;height:15px;}
 
 /* ── FORMS ── */
 .field{margin-bottom:14px;}
-.field-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--teal-dk);margin-bottom:5px;display:block;}
-.field-input{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:'Nunito Sans',sans-serif;outline:none;color:var(--text);background:var(--teal-pale);transition:border-color 0.15s;}
-.field-input:focus{border-color:var(--teal);}
+.field-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--burg);margin-bottom:5px;display:block;font-family:'Outfit',sans-serif;}
+.field-input{width:100%;padding:10px 12px;border:1px solid var(--cream-border);font-size:14px;font-family:'Outfit',sans-serif;outline:none;color:var(--ink);background:var(--cream);transition:border-color .15s;}
+.field-input:focus{border-color:var(--burg);}
 textarea.field-input{resize:vertical;min-height:70px;line-height:1.5;}
-.field-hint{font-size:11px;color:var(--text-mid);margin-top:4px;}
-
-.btn-primary{width:100%;padding:13px;background:var(--teal);color:white;border:none;border-radius:12px;font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;cursor:pointer;transition:background 0.15s,transform 0.1s;}
-.btn-primary:hover{background:var(--teal-dk);transform:translateY(-1px);}
-.btn-secondary{padding:9px 18px;background:transparent;color:var(--text-mid);border:1.5px solid var(--border);border-radius:10px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.15s;}
-.btn-secondary:hover{border-color:var(--teal);color:var(--teal-dk);}
-.btn-teal-sm{padding:8px 16px;background:var(--teal);color:white;border:none;border-radius:10px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:background 0.15s;display:flex;align-items:center;gap:5px;}
-.btn-teal-sm:hover{background:var(--teal-dk);}
-.btn-teal-sm svg{width:15px;height:15px;}
+.field-hint{font-size:11px;color:var(--ink-lt);margin-top:4px;font-family:'Outfit',sans-serif;}
+.btn-primary{width:100%;padding:13px;background:var(--burg);color:white;border:none;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:background .15s;letter-spacing:.3px;}
+.btn-primary:hover{background:var(--burg-dk);}
+.btn-secondary{padding:9px 16px;background:transparent;color:var(--ink-mid);border:1px solid var(--cream-border);font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;}
+.btn-secondary:hover{border-color:var(--burg);color:var(--burg);}
+.btn-burg-sm{padding:7px 14px;background:var(--burg);color:white;border:none;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:background .15s;display:flex;align-items:center;gap:4px;letter-spacing:.3px;}
+.btn-burg-sm:hover{background:var(--burg-dk);}
+.btn-burg-sm svg{width:14px;height:14px;}
 
 /* ── ADMIN PANEL ── */
-#admin-panel{display:none;background:var(--page-bg);min-height:100vh;max-width:480px;margin:0 auto;padding-bottom:80px;}
-#admin-panel.open{display:block;}
-.admin-topbar{background:var(--teal);padding:18px 20px;display:flex;align-items:center;justify-content:space-between;}
-.admin-topbar-title{font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;color:white;}
-.admin-topbar-sub{font-size:12px;color:rgba(255,255,255,0.75);margin-top:1px;}
+#admin-panel{display:none;background:var(--cream);min-height:100vh;max-width:480px;margin:0 auto;padding-bottom:80px;}
+.admin-topbar{background:var(--ink);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;}
+.admin-topbar-left{}
+.admin-topbar-title{font-family:'DM Serif Display',serif;font-size:18px;font-weight:400;color:var(--cream);font-style:italic;}
+.admin-topbar-sub{font-size:11px;color:rgba(250,247,242,.5);margin-top:2px;font-family:'Outfit',sans-serif;letter-spacing:.5px;text-transform:uppercase;}
 .admin-topbar-actions{display:flex;gap:8px;align-items:center;}
-.icon-btn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.2);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.15s;}
-.icon-btn:hover{background:rgba(255,255,255,0.35);}
-.icon-btn svg{width:18px;height:18px;color:white;}
+.icon-btn{width:34px;height:34px;background:rgba(255,255,255,.1);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;}
+.icon-btn:hover{background:rgba(255,255,255,.2);}
+.icon-btn svg{width:17px;height:17px;color:var(--cream);}
 
-.admin-section{background:white;border-radius:var(--radius);margin:16px;border:1.5px solid var(--border);overflow:hidden;}
-.admin-section-hdr{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-.admin-section-title{font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;color:var(--text);display:flex;align-items:center;gap:7px;}
-.admin-section-title svg{width:16px;height:16px;color:var(--teal);}
-.admin-section-hint{font-size:11px;color:var(--text-light);font-weight:400;margin-left:4px;}
-
-.field-group{padding:14px 16px;display:flex;flex-direction:column;gap:12px;border-bottom:1px solid var(--border);}
+.admin-section{background:var(--white);margin:14px;border:1px solid var(--cream-border);}
+.admin-section-hdr{padding:12px 14px;border-bottom:1px solid var(--cream-border);display:flex;align-items:center;justify-content:space-between;}
+.admin-section-title{font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:6px;}
+.admin-section-title svg{width:15px;height:15px;color:var(--burg);}
+.admin-section-hint{font-size:10px;color:var(--ink-lt);font-weight:400;margin-left:3px;}
+.field-group{padding:14px;display:flex;flex-direction:column;gap:10px;border-bottom:1px solid var(--cream-border);}
 .field-group:last-child{border-bottom:none;}
 
 /* ── DRAG ROWS ── */
-.drag-row{padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;cursor:default;user-select:none;transition:background 0.1s;}
+.drag-row{padding:9px 12px;border-bottom:1px solid var(--cream-border);display:flex;align-items:center;gap:9px;cursor:default;user-select:none;transition:background .1s;}
 .drag-row:last-child{border-bottom:none;}
-.drag-row.dragging{opacity:0.35;background:var(--teal-pale);}
-.drag-row.drag-over{border-top:2.5px solid var(--teal);}
-.drag-handle{color:var(--text-light);cursor:grab;flex-shrink:0;padding:4px;border-radius:6px;transition:background 0.1s;}
-.drag-handle:hover{background:var(--teal-lt);color:var(--teal-dk);}
-.drag-handle svg{width:18px;height:18px;display:block;}
+.drag-row.dragging{opacity:.35;background:var(--cream);}
+.drag-row.drag-over{border-top:2px solid var(--burg);}
+.drag-handle{color:var(--ink-lt);cursor:grab;flex-shrink:0;padding:3px;transition:color .1s;}
+.drag-handle:hover{color:var(--burg);}
+.drag-handle svg{width:17px;height:17px;display:block;}
 .drag-handle:active{cursor:grabbing;}
-
-.social-icon-badge{width:32px;height:32px;border-radius:8px;background:var(--teal-lt);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.social-icon-badge svg{width:16px;height:16px;color:var(--teal-dk);}
-.social-name{font-size:13px;font-weight:700;color:var(--text);width:80px;flex-shrink:0;}
-.social-admin-input{flex:1;padding:8px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-family:'Nunito Sans',sans-serif;outline:none;color:var(--text);background:var(--teal-pale);transition:border-color 0.15s;}
-.social-admin-input:focus{border-color:var(--teal);}
-
-.link-admin-thumb{width:44px;height:44px;border-radius:8px;background:var(--teal-lt);flex-shrink:0;display:flex;align-items:center;justify-content:center;overflow:hidden;}
-.link-admin-thumb img{width:100%;height:100%;object-fit:cover;border-radius:8px;}
+.social-icon-badge{width:30px;height:30px;background:var(--cream-dk);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.social-icon-badge svg{width:15px;height:15px;color:var(--ink-mid);}
+.social-name{font-size:12px;font-weight:700;color:var(--ink);width:76px;flex-shrink:0;font-family:'Outfit',sans-serif;}
+.social-admin-input{flex:1;padding:7px 9px;border:1px solid var(--cream-border);font-size:12px;font-family:'Outfit',sans-serif;outline:none;color:var(--ink);background:var(--cream);transition:border-color .15s;}
+.social-admin-input:focus{border-color:var(--burg);}
+.link-admin-thumb{width:40px;height:40px;background:var(--cream-dk);flex-shrink:0;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.link-admin-thumb img{width:100%;height:100%;object-fit:cover;}
 .link-admin-info{flex:1;min-width:0;}
-.link-admin-title{font-size:13px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.link-admin-url{font-size:11px;color:var(--text-mid);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px;}
-.link-admin-actions{display:flex;gap:6px;flex-shrink:0;align-items:center;}
-.mini-btn{width:30px;height:30px;border-radius:8px;border:1.5px solid var(--border);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;}
-.mini-btn svg{width:14px;height:14px;}
-.mini-btn.edit{color:var(--teal-dk);}
-.mini-btn.edit:hover{background:var(--teal-lt);border-color:var(--teal);}
+.link-admin-title{font-size:12px;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'Outfit',sans-serif;}
+.link-admin-url{font-size:10px;color:var(--ink-lt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px;font-family:'Outfit',sans-serif;}
+.link-admin-actions{display:flex;gap:5px;flex-shrink:0;align-items:center;}
+.mini-btn{width:28px;height:28px;border:1px solid var(--cream-border);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.mini-btn svg{width:13px;height:13px;}
+.mini-btn.edit{color:var(--burg);}
+.mini-btn.edit:hover{background:var(--burg-lt);border-color:var(--burg);}
 .mini-btn.del{color:#E24B4A;}
 .mini-btn.del:hover{background:#FCEBEB;border-color:#F7C1C1;}
 
-.toggle{position:relative;width:36px;height:20px;cursor:pointer;flex-shrink:0;}
+/* ── TOGGLE ── */
+.toggle{position:relative;width:34px;height:19px;cursor:pointer;flex-shrink:0;}
 .toggle input{opacity:0;width:0;height:0;position:absolute;}
-.toggle-track{position:absolute;inset:0;background:#D3D1C7;border-radius:20px;transition:background 0.2s;}
-.toggle input:checked+.toggle-track{background:var(--teal);}
-.toggle-thumb{position:absolute;top:3px;left:3px;width:14px;height:14px;background:white;border-radius:50%;transition:transform 0.2s;pointer-events:none;}
-.toggle input:checked~.toggle-thumb{transform:translateX(16px);}
+.toggle-track{position:absolute;inset:0;background:#ccc;border-radius:19px;transition:background .2s;}
+.toggle input:checked+.toggle-track{background:var(--burg);}
+.toggle-thumb{position:absolute;top:2px;left:2px;width:15px;height:15px;background:white;border-radius:50%;transition:transform .2s;pointer-events:none;}
+.toggle input:checked~.toggle-thumb{transform:translateX(15px);}
 
 /* ── EDIT LINK MODAL ── */
-.type-select{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:6px;}
-.type-opt{border:1.5px solid var(--border);border-radius:10px;padding:8px 4px;text-align:center;cursor:pointer;font-size:11px;font-weight:700;color:var(--text-mid);transition:all 0.15s;background:var(--teal-pale);}
-.type-opt.selected{border-color:var(--teal);background:var(--teal-lt);color:var(--teal-dk);}
-.type-opt svg{width:18px;height:18px;display:block;margin:0 auto 4px;}
-.thumb-preview-wrap{display:flex;align-items:center;gap:12px;margin-top:8px;}
-.thumb-preview{width:56px;height:56px;border-radius:10px;background:var(--teal-lt);overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.type-select{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:6px;}
+.type-opt{border:1px solid var(--cream-border);padding:8px 4px;text-align:center;cursor:pointer;font-size:10px;font-weight:700;color:var(--ink-mid);transition:all .15s;background:var(--cream);font-family:'Outfit',sans-serif;letter-spacing:.3px;text-transform:uppercase;}
+.type-opt.selected{border-color:var(--burg);background:var(--burg-lt);color:var(--burg);}
+.type-opt svg{width:17px;height:17px;display:block;margin:0 auto 4px;}
+.thumb-preview-wrap{display:flex;align-items:center;gap:10px;margin-top:8px;}
+.thumb-preview{width:52px;height:52px;background:var(--cream-dk);overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
 .thumb-preview img{width:100%;height:100%;object-fit:cover;}
-.thumb-hint{font-size:11px;color:var(--text-mid);line-height:1.5;}
-.edit-actions{display:flex;gap:10px;margin-top:20px;}
+.thumb-hint{font-size:11px;color:var(--ink-lt);line-height:1.5;font-family:'Outfit',sans-serif;}
+.edit-actions{display:flex;gap:9px;margin-top:18px;}
 .edit-actions .btn-primary{flex:1;}
 
-/* ── PHOTO PREVIEW in admin ── */
-.hero-preview-wrap{position:relative;width:100%;height:120px;border-radius:10px;overflow:hidden;background:#1a1a1a;margin-top:8px;}
-.hero-preview-img{width:100%;height:100%;object-fit:cover;object-position:center top;display:none;}
-.hero-preview-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#555;font-size:12px;font-family:'Nunito Sans',sans-serif;}
-.hero-preview-scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.7) 0%,transparent 60%);}
-.hero-preview-text{position:absolute;bottom:0;left:0;right:0;padding:8px 12px;}
-.hero-preview-name{font-family:'Nunito',sans-serif;font-size:14px;font-weight:900;color:#fff;}
-.hero-preview-handle{font-size:10px;color:rgba(255,255,255,0.7);}
+/* ── HERO PREVIEW in admin ── */
+.hero-preview-wrap{position:relative;width:100%;height:110px;overflow:hidden;background:#111;margin-top:8px;}
+.hero-preview-img{width:100%;height:100%;object-fit:cover;object-position:center 15%;display:none;}
+.hero-preview-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#555;font-size:12px;font-family:'Outfit',sans-serif;}
+.hero-preview-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.65) 0%,transparent 60%);}
+.hero-preview-text{position:absolute;bottom:0;left:0;right:0;padding:7px 10px;}
+.hero-preview-name{font-family:'DM Serif Display',serif;font-size:13px;color:#fff;font-style:italic;}
+.hero-preview-handle{font-size:9px;color:rgba(255,255,255,.55);font-family:'Outfit',sans-serif;margin-top:1px;letter-spacing:.5px;text-transform:uppercase;}
 
 /* ── ADD LINK NUDGE ── */
-.add-link-nudge{margin:12px 16px 0;background:white;border:1.5px dashed var(--teal);border-radius:var(--radius);padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:background 0.15s;}
-.add-link-nudge:hover{background:var(--teal-pale);}
-.add-link-nudge-icon{width:40px;height:40px;border-radius:10px;background:var(--teal-lt);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.add-link-nudge-icon svg{width:20px;height:20px;color:var(--teal-dk);}
-.add-link-nudge-text{font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;color:var(--teal-dk);}
-.add-link-nudge-sub{font-size:12px;color:var(--text-mid);}
+.add-link-nudge{margin:10px 14px 0;background:var(--white);border:1px dashed var(--burg);padding:13px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:background .15s;}
+.add-link-nudge:hover{background:var(--burg-lt);}
+.add-link-nudge-icon{width:36px;height:36px;background:var(--burg-lt);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.add-link-nudge-icon svg{width:18px;height:18px;color:var(--burg);}
+.add-link-nudge-text{font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:var(--burg);}
+.add-link-nudge-sub{font-size:11px;color:var(--ink-lt);font-family:'Outfit',sans-serif;}
 
 /* ── TOAST ── */
-.toast{position:fixed;top:16px;left:50%;transform:translateX(-50%) translateY(-80px);background:var(--teal);color:white;padding:10px 20px;border-radius:30px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;z-index:999;transition:transform 0.3s ease;white-space:nowrap;display:flex;align-items:center;gap:6px;box-shadow:0 4px 16px rgba(45,197,190,0.35);}
+.toast{position:fixed;top:16px;left:50%;transform:translateX(-50%) translateY(-80px);background:var(--ink);color:var(--cream);padding:9px 18px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;z-index:999;transition:transform .3s ease;white-space:nowrap;display:flex;align-items:center;gap:5px;box-shadow:0 4px 16px rgba(26,10,10,.25);letter-spacing:.3px;}
 .toast.show{transform:translateX(-50%) translateY(0);}
-.toast svg{width:15px;height:15px;}
+.toast svg{width:14px;height:14px;}
 </style>
 </head>
 <body>
@@ -191,40 +261,43 @@ textarea.field-input{resize:vertical;min-height:70px;line-height:1.5;}
   <span id="toast-msg">Saved!</span>
 </div>
 
-<!-- ══════════════ PUBLIC PAGE ══════════════ -->
+<!-- ══════════ PUBLIC PAGE ══════════ -->
 <div id="public-page">
 
-  <!-- HERO PHOTO HEADER -->
-  <div class="hero-header">
-    <div class="hero-bg-placeholder" id="pub-hero-placeholder">
+  <!-- Full bleed hero photo — no text overlay -->
+  <div class="hero-photo">
+    <div class="hero-photo-ph" id="pub-hero-ph">
       <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
     </div>
-    <img class="hero-bg-img" id="pub-hero-img" src="" alt="" onerror="this.style.display='none';document.getElementById('pub-hero-placeholder').style.display='flex'">
-    <div class="hero-scrim"></div>
-    <div class="hero-text">
-      <div class="hero-name" id="pub-name">Beau Coffron</div>
-      <div class="hero-handle" id="pub-handle">@lunchboxdad</div>
-    </div>
+    <img id="pub-hero-img" src="" alt="Beau Coffron, The Lunchbox Dad" onerror="this.style.display='none';document.getElementById('pub-hero-ph').style.display='flex'">
   </div>
 
-  <!-- BELOW HERO: white area -->
-  <div class="below-hero">
-    <div class="bio-block">
-      <div class="pub-bio" id="pub-bio">Food Art + Recipes · Creative lunches + Easy Ideas + Family meals · Making food fun &amp; affordable · Oklahoma City</div>
-      <div class="pub-email" id="pub-email">bcoffron@lunchboxdad.com</div>
-    </div>
+  <!-- Thick burgundy line between photo and name bar -->
+  <div class="accent-line-top"></div>
+
+  <!-- Name bar — sits below photo, thin burgundy bottom border -->
+  <div class="name-bar">
+    <div class="profile-name" id="pub-name">Beau Coffron,<br>The Lunchbox Dad</div>
+    <div class="profile-handle" id="pub-handle">@lunchboxdad · Oklahoma City</div>
+  </div>
+
+  <!-- Content area -->
+  <div class="content-area">
+    <div class="bio-text" id="pub-bio">"Making food fun &amp; affordable for families since 2012."</div>
+    <div class="pub-email" id="pub-email" style="display:none"></div>
     <div class="social-row" id="pub-social-row"></div>
   </div>
 
-  <div class="section-label" id="pub-links-label" style="display:none">Featured links</div>
+  <div id="pub-featured-wrap"></div>
+  <div class="section-label" id="pub-links-label" style="display:none">More Links</div>
   <div class="links-list" id="pub-links-list"></div>
-  <div class="page-footer" id="footer-trigger" style="cursor:default;user-select:none;-webkit-user-select:none;">lunchboxdad.com</div>
+  <div class="page-footer" id="footer-trigger">lunchboxdad.com</div>
 </div>
 
-<!-- ══════════════ ADMIN PANEL ══════════════ -->
+<!-- ══════════ ADMIN PANEL ══════════ -->
 <div id="admin-panel">
   <div class="admin-topbar">
-    <div>
+    <div class="admin-topbar-left">
       <div class="admin-topbar-title">Admin Panel</div>
       <div class="admin-topbar-sub">Lunchbox Dad Links</div>
     </div>
@@ -249,40 +322,39 @@ textarea.field-input{resize:vertical;min-height:70px;line-height:1.5;}
     <div class="field-group">
       <div class="field">
         <label class="field-label">Display name</label>
-        <textarea class="field-input" id="admin-name" rows="2" placeholder="Beau Coffron&#10;The Lunchbox Dad" oninput="autoSaveProfile()" style="min-height:60px;resize:none"></textarea>
-        <div class="field-hint">Press Enter to add a line break in your name on the photo.</div>
+        <textarea class="field-input" id="admin-name" rows="2" oninput="autoSaveProfile()">Beau Coffron,
+The Lunchbox Dad</textarea>
       </div>
       <div class="field">
-        <label class="field-label">Handle</label>
-        <input class="field-input" id="admin-handle" type="text" value="@lunchboxdad" oninput="autoSaveProfile()">
+        <label class="field-label">Handle + location</label>
+        <input class="field-input" id="admin-handle" type="text" value="@lunchboxdad · Oklahoma City" oninput="autoSaveProfile()">
       </div>
       <div class="field">
-        <label class="field-label">Bio</label>
-        <textarea class="field-input" id="admin-bio" oninput="autoSaveProfile()">Food Art + Recipes · Creative lunches + Easy Ideas + Family meals · Making food fun &amp; affordable · Oklahoma City</textarea>
+        <label class="field-label">Bio quote</label>
+        <textarea class="field-input" id="admin-bio" oninput="autoSaveProfile()">"Making food fun &amp; affordable for families since 2012."</textarea>
       </div>
       <div class="field">
         <label class="field-label">Email (shown under bio)</label>
-        <input class="field-input" id="admin-email" type="email" value="bcoffron@lunchboxdad.com" oninput="autoSaveProfile()">
+        <input class="field-input" id="admin-email" type="email" value="lunchboxdad@emcpower.co" oninput="autoSaveProfile()">
       </div>
       <div class="field">
         <label class="field-label">Hero photo URL</label>
         <input class="field-input" id="admin-hero" type="url" placeholder="https://…" oninput="autoSaveProfile()">
-        <div class="field-hint">Paste a direct image URL — your photo will fill the top of the page.</div>
-        <div class="hero-preview-wrap" id="hero-preview-wrap">
-          <div class="hero-preview-ph" id="hero-preview-ph">No photo set yet</div>
+        <div class="field-hint">Paste a direct image URL (e.g. from Postimages or your blog). Your kitchen photo works great here.</div>
+        <div class="hero-preview-wrap">
+          <div class="hero-preview-ph" id="hero-preview-ph">No photo set</div>
           <img class="hero-preview-img" id="hero-preview-img" src="" alt="" onerror="this.style.display='none';document.getElementById('hero-preview-ph').style.display='flex'">
-          <div class="hero-preview-scrim"></div>
+          <div class="hero-preview-overlay"></div>
           <div class="hero-preview-text">
-            <div class="hero-preview-name" id="hero-preview-name">Beau Coffron</div>
+            <div class="hero-preview-name" id="hero-preview-name">Beau Coffron,<br>The Lunchbox Dad</div>
             <div class="hero-preview-handle" id="hero-preview-handle">@lunchboxdad</div>
           </div>
         </div>
       </div>
-      <button class="btn-primary" onclick="saveProfileNow()" style="margin-top:4px">Save profile changes</button>
     </div>
   </div>
 
-  <!-- SOCIAL PROFILES -->
+  <!-- SOCIALS -->
   <div class="admin-section">
     <div class="admin-section-hdr">
       <div class="admin-section-title">
@@ -290,10 +362,6 @@ textarea.field-input{resize:vertical;min-height:70px;line-height:1.5;}
         Social profiles
         <span class="admin-section-hint">(drag to reorder · toggle to show/hide)</span>
       </div>
-      <button class="btn-teal-sm" onclick="saveSocialsNow()">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-        Save
-      </button>
     </div>
     <div id="social-admin-list"></div>
   </div>
@@ -306,7 +374,7 @@ textarea.field-input{resize:vertical;min-height:70px;line-height:1.5;}
         Links
         <span class="admin-section-hint">(drag to reorder · toggle to show/hide)</span>
       </div>
-      <button class="btn-teal-sm" onclick="openAddLink()">
+      <button class="btn-burg-sm" onclick="openAddLink()">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
         Add link
       </button>
@@ -325,7 +393,7 @@ textarea.field-input{resize:vertical;min-height:70px;line-height:1.5;}
   </div>
 </div>
 
-<!-- ══════════════ LOGIN MODAL ══════════════ -->
+<!-- ══════════ LOGIN MODAL ══════════ -->
 <div class="modal-overlay" id="login-modal">
   <div class="slide-panel">
     <div class="panel-title">Admin login</div>
@@ -335,22 +403,21 @@ textarea.field-input{resize:vertical;min-height:70px;line-height:1.5;}
       <div style="font-size:12px;color:#E24B4A;display:none;margin-top:6px" id="login-error">Incorrect password — try again.</div>
     </div>
     <button class="btn-primary" onclick="doLogin()">Sign in</button>
-    <button class="btn-secondary" onclick="closeLogin()" style="width:100%;margin-top:10px">Cancel</button>
-    <div style="margin-top:16px;padding:10px 12px;background:var(--teal-pale);border-radius:10px;border:1px solid var(--border);font-size:11px;color:var(--text-mid)">
-      Press and hold the footer text for 2 seconds to access this panel.
+    <button class="btn-secondary" onclick="closeLogin()" style="width:100%;margin-top:9px">Cancel</button>
+    <div style="margin-top:14px;padding:9px 11px;background:var(--cream);font-size:11px;color:var(--ink-lt);font-family:'Outfit',sans-serif;border:1px solid var(--cream-border)">
+      Password: <code style="color:var(--burg);font-weight:700">Mypassislbd1813!</code>
     </div>
   </div>
 </div>
 
-<!-- ══════════════ EDIT / ADD LINK MODAL ══════════════ -->
+<!-- ══════════ EDIT / ADD LINK MODAL ══════════ -->
 <div class="modal-overlay" id="edit-modal">
   <div class="slide-panel">
     <div class="panel-title">
       <span id="edit-modal-title">Add link</span>
       <button class="close-btn" onclick="closeEditModal()"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
     </div>
-
-    <div class="field" style="margin-bottom:16px">
+    <div class="field" style="margin-bottom:14px">
       <label class="field-label">Link type</label>
       <div class="type-select" id="type-select">
         <div class="type-opt selected" data-type="link" onclick="selectType('link')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>Web link</div>
@@ -361,43 +428,26 @@ textarea.field-input{resize:vertical;min-height:70px;line-height:1.5;}
         <div class="type-opt" data-type="other" onclick="selectType('other')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"/></svg>Other</div>
       </div>
     </div>
-
     <div class="field">
       <label class="field-label">Title</label>
       <input class="field-input" id="edit-title" type="text" placeholder="e.g. Latest blog post">
     </div>
     <div class="field">
-      <label class="field-label">Description <span style="font-weight:400;color:var(--text-light);text-transform:none;letter-spacing:0">(optional)</span></label>
-      <input class="field-input" id="edit-desc" type="text" placeholder="Short subtitle shown under the title">
+      <label class="field-label">Description <span style="font-weight:400;color:var(--ink-lt);text-transform:none;letter-spacing:0">(optional)</span></label>
+      <input class="field-input" id="edit-desc" type="text" placeholder="Short subtitle shown under title">
     </div>
     <div class="field" id="url-field">
       <label class="field-label" id="url-label">URL</label>
       <input class="field-input" id="edit-url" type="url" placeholder="https://…">
     </div>
     <div class="field">
-      <label class="field-label">Thumbnail <span style="font-weight:400;color:var(--text-light);text-transform:none;letter-spacing:0">(optional)</span></label>
-
-      <div style="display:flex;gap:8px;margin-bottom:10px">
-        <button type="button" class="btn-teal-sm" id="auto-fetch-btn" onclick="autoFetchThumb()" style="flex:1;justify-content:center">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-          Auto-fetch from URL
-        </button>
-        <label class="btn-teal-sm" style="flex:1;justify-content:center;cursor:pointer" title="Upload your own photo">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
-          Upload photo
-          <input type="file" id="thumb-file-input" accept="image/*" style="display:none" onchange="handleThumbUpload(event)">
-        </label>
-      </div>
-
-      <div style="font-size:11px;color:var(--text-mid);margin-bottom:8px;line-height:1.5" id="fetch-status"></div>
-
-      <input class="field-input" id="edit-thumb" type="url" placeholder="Or paste a direct image URL…" oninput="previewThumb()" style="margin-bottom:8px">
-
+      <label class="field-label">Thumbnail photo URL <span style="font-weight:400;color:var(--ink-lt);text-transform:none;letter-spacing:0">(optional)</span></label>
+      <input class="field-input" id="edit-thumb" type="url" placeholder="https://…" oninput="previewThumb()">
       <div class="thumb-preview-wrap">
         <div class="thumb-preview" id="thumb-preview-box">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:24px;height:24px;color:var(--teal-dk)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:22px;height:22px;color:var(--ink-lt)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
         </div>
-        <div class="thumb-hint">Hit "Auto-fetch" to pull the featured image from your link URL, or upload your own photo from your device.</div>
+        <div class="thumb-hint">Paste any direct image URL to preview before saving.</div>
       </div>
     </div>
     <input type="hidden" id="edit-id">
@@ -412,7 +462,7 @@ textarea.field-input{resize:vertical;min-height:70px;line-height:1.5;}
 
 <script>
 const ADMIN_PW='Mypassislbd1813!';
-const JSONBIN_KEY='$2a$10$mD.VjNFPw28l/8mwoyzX6e6b.e5S/PzYmV4JVe4BsPGEmRpLc91O2';
+const JSONBIN_KEY='$2a$10$8fLozsm78KbjkbdnKQ7gtOyMgpFtsIRdjnmG7Sx91CSxAaaR.IRB6';
 const JSONBIN_BIN='6a19ffa221f9ee59d29b9b60';
 const JSONBIN_URL='https://api.jsonbin.io/v3/b/'+JSONBIN_BIN;
 
@@ -427,189 +477,141 @@ const SOCIAL_DEFS={
 };
 
 let data={
-  profile:{name:'Beau Coffron',handle:'@lunchboxdad',bio:'Food Art + Recipes · Creative lunches + Easy Ideas + Family meals · Making food fun & affordable · Oklahoma City',email:'bcoffron@lunchboxdad.com',hero:''},
+  profile:{name:'Beau Coffron,\nThe Lunchbox Dad',handle:'@lunchboxdad · Oklahoma City',bio:'"Making food fun & affordable for families since 2012."',email:'lunchboxdad@emcpower.co',hero:''},
   socialOrder:['instagram','tiktok','youtube','facebook','pinterest','twitter','threads'],
   socialValues:{instagram:'https://instagram.com/lunchboxdad',tiktok:'',youtube:'https://youtube.com/lunchboxdad',facebook:'https://facebook.com/lunchboxdad',pinterest:'https://pinterest.com/lunchboxdad',twitter:'https://twitter.com/lunchboxdad',threads:''},
   socialVisible:{instagram:true,tiktok:true,youtube:true,facebook:true,pinterest:true,twitter:true,threads:true},
   links:[
     {id:'l1',type:'blog',title:'OSU Lunch for College Students!',desc:'Latest post · lunchboxdad.com',url:'https://www.lunchboxdad.com/2025/11/how-to-make-oklahoma-state-university.html',thumb:'',visible:true},
-    {id:'l2',type:'blog',title:'Ferrari F1 Lunch for Your Kids!',desc:'Fan favorite · lunchboxdad.com',url:'https://www.lunchboxdad.com/2025/05/how-to-make-ferrari-f1-lunch-for-your.html',thumb:'',visible:true},
+    {id:'l2',type:'blog',title:'Ferrari F1 Lunch For Your Kids!',desc:'Fan favorite · lunchboxdad.com',url:'https://www.lunchboxdad.com/2025/05/how-to-make-ferrari-f1-lunch-for-your.html',thumb:'',visible:true},
     {id:'l3',type:'link',title:'Free Recipe Ideas',desc:'Meal ideas + hacks for families',url:'https://www.lunchboxdad.com',thumb:'',visible:true},
     {id:'l4',type:'link',title:'Work With Me',desc:'Brand collabs & media inquiries',url:'https://www.lunchboxdad.com',thumb:'',visible:true},
   ]
 };
 
-let editingId=null,editingType='link',dragSrc=null,dragList=null;
-let isSaving=false;
+let editingId=null,editingType='link',dragSrc=null,dragList=null,saving=false;
 
+/* ── JSONBIN CLOUD SYNC ── */
 async function unlockBin(){
   try{
-    await fetch('https://api.jsonbin.io/v3/b/'+JSONBIN_BIN+'/meta/privacy',{
-      method:'PUT',
-      headers:{
-        'Content-Type':'application/json',
-        'X-Master-Key':JSONBIN_KEY
-      },
-      body:JSON.stringify({"private":false})
-    });
-  }catch(e){console.warn('Could not unlock bin',e);}
+    await fetch(JSONBIN_URL+'/meta',{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':JSONBIN_KEY,'X-Bin-Private':'false'},body:'{}' });
+  }catch(e){}
 }
-
-async function loadData(){
+async function cloudLoad(){
   try{
-    showPageLoading(true);
-    await unlockBin();
-    const res=await fetch(JSONBIN_URL+'/latest',{
-      method:'GET',
-      headers:{
-        'X-Master-Key':JSONBIN_KEY,
-        'X-Bin-Meta':'false'
-      }
-    });
-    if(res.ok){
-      const json=await res.json();
-      if(json && typeof json==='object'){
-        if(json.profile) data=json;
-        else if(json.record && json.record.profile) data=json.record;
-      }
-    } else {
-      console.warn('JSONbin responded with',res.status,await res.text());
-    }
-  }catch(e){console.warn('Could not load from JSONbin, using defaults',e);}
-  finally{showPageLoading(false);}
+    const r=await fetch(JSONBIN_URL+'/latest',{headers:{'X-Master-Key':JSONBIN_KEY,'X-Bin-Meta':'false'}});
+    if(r.ok){const d=await r.json();if(d&&d.profile)data=d;}
+  }catch(e){}
 }
-
-async function saveData(){
-  if(isSaving) return;
-  isSaving=true;
+async function cloudSave(){
+  if(saving)return; saving=true;
   try{
-    const res=await fetch(JSONBIN_URL,{
-      method:'PUT',
-      headers:{
-        'Content-Type':'application/json',
-        'X-Master-Key':JSONBIN_KEY
-      },
-      body:JSON.stringify(data)
-    });
-    if(!res.ok) throw new Error('Save failed: '+res.status);
-  }catch(e){console.warn('Could not save to JSONbin',e);showToast('Save failed — check connection');}
-  finally{isSaving=false;}
-}
-
-function showPageLoading(show){
-  let el=document.getElementById('page-loading');
-  if(!el){
-    el=document.createElement('div');
-    el.id='page-loading';
-    el.style.cssText='position:fixed;inset:0;background:var(--teal-pale);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;gap:12px;';
-    el.innerHTML='<div style="width:36px;height:36px;border:3px solid var(--teal-lt);border-top-color:var(--teal);border-radius:50%;animation:spin 0.7s linear infinite"></div><div style="font-family:Nunito,sans-serif;font-size:14px;font-weight:700;color:var(--teal-dk)">Loading your page…</div><style>@keyframes spin{to{transform:rotate(360deg)}}</style>';
-    document.body.appendChild(el);
-  }
-  el.style.display=show?'flex':'none';
+    await fetch(JSONBIN_URL,{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':JSONBIN_KEY},body:JSON.stringify(data)});
+  }catch(e){}
+  saving=false;
 }
 
 /* ── AUTO-SAVE PROFILE ── */
-async function autoSaveProfile(){
+function autoSaveProfile(){
   data.profile.name   = document.getElementById('admin-name').value;
   data.profile.handle = document.getElementById('admin-handle').value;
   data.profile.bio    = document.getElementById('admin-bio').value;
   data.profile.email  = document.getElementById('admin-email').value;
   data.profile.hero   = document.getElementById('admin-hero').value;
-  renderPublic();
-  updateHeroPreview();
-}
-
-async function saveProfileNow(){
-  data.profile.name   = document.getElementById('admin-name').value;
-  data.profile.handle = document.getElementById('admin-handle').value;
-  data.profile.bio    = document.getElementById('admin-bio').value;
-  data.profile.email  = document.getElementById('admin-email').value;
-  data.profile.hero   = document.getElementById('admin-hero').value;
-  renderPublic();
-  updateHeroPreview();
-  await saveData();
-  showToast('Profile saved!');
+  cloudSave(); renderPublic(); updateHeroPreview();
 }
 
 function updateHeroPreview(){
-  const url = document.getElementById('admin-hero').value.trim();
-  const img = document.getElementById('hero-preview-img');
-  const ph  = document.getElementById('hero-preview-ph');
-  if(url){
-    img.src=url; img.style.display='block'; ph.style.display='none';
-  } else {
-    img.style.display='none'; ph.style.display='flex';
-  }
-  document.getElementById('hero-preview-name').textContent   = document.getElementById('admin-name').value||'Beau Coffron';
-  document.getElementById('hero-preview-handle').textContent = document.getElementById('admin-handle').value||'@lunchboxdad';
+  const url=document.getElementById('admin-hero').value.trim();
+  const img=document.getElementById('hero-preview-img');
+  const ph=document.getElementById('hero-preview-ph');
+  if(url){img.src=url;img.style.display='block';ph.style.display='none';}
+  else{img.style.display='none';ph.style.display='flex';}
+  document.getElementById('hero-preview-name').innerHTML=document.getElementById('admin-name').value.replace('\n','<br>')||'Beau Coffron';
+  document.getElementById('hero-preview-handle').textContent=document.getElementById('admin-handle').value||'@lunchboxdad';
 }
 
 /* ── RENDER PUBLIC ── */
 function renderPublic(){
   const p=data.profile;
-  document.getElementById('pub-name').textContent   = p.name;
-  document.getElementById('pub-handle').textContent = p.handle;
-  document.getElementById('pub-bio').textContent    = p.bio;
-  const emailEl = document.getElementById('pub-email');
-  emailEl.textContent = p.email||'';
-  emailEl.style.display = p.email ? 'block' : 'none';
+  document.getElementById('pub-name').innerHTML=(p.name||'').replace('\n','<br>');
+  document.getElementById('pub-handle').textContent=p.handle||'';
+  document.getElementById('pub-bio').innerHTML=p.bio||'';
+  const emailEl=document.getElementById('pub-email');
+  emailEl.textContent=p.email||'';
+  emailEl.style.display=p.email?'block':'none';
 
   // hero photo
-  const heroImg = document.getElementById('pub-hero-img');
-  const heroPh  = document.getElementById('pub-hero-placeholder');
-  if(p.hero){
-    heroImg.src=p.hero; heroImg.style.display='block'; heroPh.style.display='none';
-  } else {
-    heroImg.style.display='none'; heroPh.style.display='flex';
-  }
+  const heroImg=document.getElementById('pub-hero-img');
+  const heroPh=document.getElementById('pub-hero-ph');
+  if(p.hero){heroImg.src=p.hero;heroImg.style.display='block';heroPh.style.display='none';}
+  else{heroImg.style.display='none';heroPh.style.display='flex';}
 
   // socials
   const sr=document.getElementById('pub-social-row');
   sr.innerHTML='';
   data.socialOrder.forEach(key=>{
-    if(!data.socialVisible[key]) return;
-    const val=data.socialValues[key]; if(!val) return;
+    if(!data.socialVisible[key])return;
+    const val=data.socialValues[key];if(!val)return;
     const def=SOCIAL_DEFS[key];
     const a=document.createElement('a');
-    a.className='social-pill';
-    a.href=val; a.target='_blank'; a.rel='noopener';
+    a.className='social-pill';a.href=val;a.target='_blank';a.rel='noopener';
     a.innerHTML=def.icon+'<span>'+def.label+'</span>';
     sr.appendChild(a);
   });
 
-  // links
+  // featured card — first visible link gets the hero treatment
+  const featWrap=document.getElementById('pub-featured-wrap');
+  featWrap.innerHTML='';
+  const vis=data.links.filter(l=>l.visible);
+  if(vis.length){
+    const feat=vis[0];
+    const wrapper=document.createElement('div');
+    wrapper.className='featured-wrap';
+    const lbl=document.createElement('div');
+    lbl.className='featured-label';
+    lbl.textContent='Featured';
+    wrapper.appendChild(lbl);
+    const a=document.createElement('a');
+    a.className='featured-card';
+    a.href=feat.url||'#';
+    a.target=feat.type==='email'?'_self':'_blank';
+    a.rel='noopener';
+    const thumbHtml=feat.thumb
+      ?`<div class="featured-thumb"><img src="${feat.thumb}" alt="${feat.title}" onerror="this.parentNode.outerHTML='<div class=featured-thumb-icon>${getTypeIcon(feat.type)}</div>'"></div>`
+      :`<div class="featured-thumb-icon">${getTypeIcon(feat.type)}</div>`;
+    a.innerHTML=thumbHtml+`<div class="featured-info"><div class="featured-title">${feat.title}</div>${feat.desc?`<div class="featured-desc">${feat.desc}</div>`:''}</div><div class="featured-arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg></div>`;
+    wrapper.appendChild(a);
+    featWrap.appendChild(wrapper);
+  }
+
+  // remaining links
   const ll=document.getElementById('pub-links-list');
   ll.innerHTML='';
-  const vis=data.links.filter(l=>l.visible);
-  document.getElementById('pub-links-label').style.display=vis.length?'block':'none';
-  vis.forEach(link=>{
+  const rest=vis.slice(1);
+  document.getElementById('pub-links-label').style.display=rest.length?'block':'none';
+  rest.forEach(link=>{
     const card=document.createElement('a');
     card.className='link-card';
     card.href=link.url||'#';
     card.target=link.type==='email'?'_self':'_blank';
     card.rel='noopener';
     const thumbHtml=link.thumb
-      ?`<div class="link-thumb"><img src="${link.thumb}" alt="${link.title}" onerror="this.style.display='none';this.parentNode.style.background='var(--teal-lt)'"></div>`
+      ?`<div class="link-thumb"><img src="${link.thumb}" alt="${link.title}" onerror="this.parentNode.innerHTML='${getTypeIcon(link.type)}'"></div>`
       :`<div class="link-thumb-icon">${getTypeIcon(link.type)}</div>`;
     card.innerHTML=thumbHtml+`<div class="link-info"><div class="link-title">${link.title}</div>${link.desc?`<div class="link-desc">${link.desc}</div>`:''}</div><div class="link-arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg></div>`;
     ll.appendChild(card);
   });
 }
 
-function getTypeIconAdmin(type){
-  const icons={
-    blog:'📝', email:'✉️', video:'▶️', shop:'🛍️', link:'🔗', other:'•'
-  };
-  return `<span style="font-size:20px;line-height:1">${icons[type]||icons.link}</span>`;
-}
 function getTypeIcon(type){
   const icons={
-    blog:`<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:24px;height:24px;color:var(--teal-dk)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>`,
-    email:`<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:24px;height:24px;color:var(--teal-dk)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>`,
-    video:`<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:24px;height:24px;color:var(--teal-dk)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.723v6.554a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>`,
-    shop:`<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:24px;height:24px;color:var(--teal-dk)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>`,
-    link:`<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:24px;height:24px;color:var(--teal-dk)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>`,
-    other:`<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:24px;height:24px;color:var(--teal-dk)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"/></svg>`,
+    blog:`<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:22px;height:22px;color:var(--ink-mid)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>`,
+    email:`<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:22px;height:22px;color:var(--ink-mid)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>`,
+    video:`<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:22px;height:22px;color:var(--ink-mid)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.723v6.554a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>`,
+    shop:`<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:22px;height:22px;color:var(--ink-mid)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>`,
+    link:`<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:22px;height:22px;color:var(--ink-mid)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>`,
+    other:`<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:22px;height:22px;color:var(--ink-mid)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"/></svg>`,
   };
   return icons[type]||icons.link;
 }
@@ -617,8 +619,8 @@ function getTypeIcon(type){
 /* ── RENDER ADMIN ── */
 function renderAdmin(){
   document.getElementById('admin-name').value   = data.profile.name||'';
-  document.getElementById('admin-handle').value = data.profile.handle;
-  document.getElementById('admin-bio').value    = data.profile.bio;
+  document.getElementById('admin-handle').value = data.profile.handle||'';
+  document.getElementById('admin-bio').value    = data.profile.bio||'';
   document.getElementById('admin-email').value  = data.profile.email||'';
   document.getElementById('admin-hero').value   = data.profile.hero||'';
   updateHeroPreview();
@@ -626,15 +628,13 @@ function renderAdmin(){
   renderAdminLinks();
 }
 
-/* ── SOCIAL ADMIN (draggable) ── */
+/* ── SOCIAL ADMIN ── */
 function renderAdminSocials(){
-  const list=document.getElementById('social-admin-list');
-  list.innerHTML='';
+  const list=document.getElementById('social-admin-list');list.innerHTML='';
   data.socialOrder.forEach((key,idx)=>{
     const def=SOCIAL_DEFS[key];
     const row=document.createElement('div');
-    row.className='drag-row'; row.draggable=true;
-    row.dataset.idx=idx; row.dataset.list='social';
+    row.className='drag-row';row.draggable=true;row.dataset.idx=idx;row.dataset.list='social';
     const vis=data.socialVisible[key]!==false;
     row.innerHTML=`
       <div class="drag-handle" title="Drag to reorder"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"/></svg></div>
@@ -645,33 +645,22 @@ function renderAdminSocials(){
         <input type="checkbox" ${vis?'checked':''} onchange="toggleSocialVisible('${key}')">
         <div class="toggle-track"></div><div class="toggle-thumb"></div>
       </label>`;
-    bindDrag(row,'social',idx);
-    list.appendChild(row);
+    bindDrag(row,'social',idx);list.appendChild(row);
   });
 }
-function autoSaveSocial(key){data.socialValues[key]=document.getElementById('social-input-'+key).value;renderPublic();}
-function toggleSocialVisible(key){data.socialVisible[key]=!data.socialVisible[key];saveData();renderPublic();}
-async function saveSocialsNow(){
-  SOCIAL_DEFS && Object.keys(SOCIAL_DEFS).forEach(key=>{
-    const el=document.getElementById('social-input-'+key);
-    if(el) data.socialValues[key]=el.value;
-  });
-  await saveData();
-  showToast('Socials saved!');
-}
+function autoSaveSocial(key){data.socialValues[key]=document.getElementById('social-input-'+key).value;cloudSave();renderPublic();}
+function toggleSocialVisible(key){data.socialVisible[key]=!data.socialVisible[key];cloudSave();renderPublic();}
 
-/* ── LINKS ADMIN (draggable) ── */
+/* ── LINKS ADMIN ── */
 function renderAdminLinks(){
-  const list=document.getElementById('admin-links-list');
-  list.innerHTML='';
-  if(!data.links.length){list.innerHTML='<div style="padding:20px 16px;text-align:center;font-size:13px;color:var(--text-mid)">No links yet — hit "Add link" above.</div>';return;}
+  const list=document.getElementById('admin-links-list');list.innerHTML='';
+  if(!data.links.length){list.innerHTML='<div style="padding:18px 14px;text-align:center;font-size:13px;color:var(--ink-lt);font-family:Outfit,sans-serif">No links yet — hit "Add link" above.</div>';return;}
   data.links.forEach((link,idx)=>{
     const item=document.createElement('div');
-    item.className='drag-row'; item.draggable=true;
-    item.dataset.idx=idx; item.dataset.list='links';
+    item.className='drag-row';item.draggable=true;item.dataset.idx=idx;item.dataset.list='links';
     const thumbHtml=link.thumb
-      ?`<div class="link-admin-thumb"><img src="${link.thumb}" alt="" onerror="this.style.display='none'"></div>`
-      :`<div class="link-admin-thumb">${getTypeIconAdmin(link.type)}</div>`;
+      ?`<div class="link-admin-thumb"><img src="${link.thumb}" alt=""></div>`
+      :`<div class="link-admin-thumb">${getTypeIcon(link.type).replace(/width:22px;height:22px/g,'width:16px;height:16px')}</div>`;
     item.innerHTML=`
       <div class="drag-handle" title="Drag to reorder"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"/></svg></div>
       ${thumbHtml}
@@ -687,12 +676,11 @@ function renderAdminLinks(){
         <button class="mini-btn edit" onclick="openEditLink(${idx})" title="Edit"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button>
         <button class="mini-btn del" onclick="deleteLink(${idx})" title="Delete"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>
       </div>`;
-    bindDrag(item,'links',idx);
-    list.appendChild(item);
+    bindDrag(item,'links',idx);list.appendChild(item);
   });
 }
-function toggleLinkVisible(idx){data.links[idx].visible=!data.links[idx].visible;saveData();renderAdminLinks();renderPublic();}
-async function deleteLink(idx){if(!confirm('Delete "'+data.links[idx].title+'"?'))return;data.links.splice(idx,1);await saveData();renderAdminLinks();renderPublic();showToast('Link deleted');}
+function toggleLinkVisible(idx){data.links[idx].visible=!data.links[idx].visible;cloudSave();renderAdminLinks();renderPublic();}
+function deleteLink(idx){if(!confirm('Delete "'+data.links[idx].title+'"?'))return;data.links.splice(idx,1);cloudSave();renderAdminLinks();renderPublic();showToast('Link deleted');}
 
 /* ── DRAG & DROP ── */
 function bindDrag(el,listName,idx){
@@ -703,8 +691,8 @@ function bindDrag(el,listName,idx){
   el.addEventListener('drop',e=>{
     e.preventDefault();
     if(dragSrc===null||dragSrc===idx||dragList!==listName)return;
-    if(listName==='social'){const m=data.socialOrder.splice(dragSrc,1)[0];data.socialOrder.splice(idx,0,m);saveData();renderAdminSocials();renderPublic();}
-    else{const m=data.links.splice(dragSrc,1)[0];data.links.splice(idx,0,m);saveData();renderAdminLinks();renderPublic();}
+    if(listName==='social'){const m=data.socialOrder.splice(dragSrc,1)[0];data.socialOrder.splice(idx,0,m);cloudSave();renderAdminSocials();renderPublic();}
+    else{const m=data.links.splice(dragSrc,1)[0];data.links.splice(idx,0,m);cloudSave();renderAdminLinks();renderPublic();}
     dragSrc=null;dragList=null;
   });
 }
@@ -714,7 +702,6 @@ function openAddLink(){
   editingId=null;editingType='link';
   document.getElementById('edit-modal-title').textContent='Add link';
   ['edit-title','edit-desc','edit-url','edit-thumb','edit-id'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('fetch-status').textContent='';
   resetThumbPreview();selectType('link');
   document.getElementById('edit-modal').classList.add('open');
 }
@@ -726,7 +713,6 @@ function openEditLink(idx){
   document.getElementById('edit-url').value=link.url||'';
   document.getElementById('edit-thumb').value=link.thumb||'';
   document.getElementById('edit-id').value=link.id;
-  document.getElementById('fetch-status').textContent='';
   selectType(link.type);previewThumb();
   document.getElementById('edit-modal').classList.add('open');
 }
@@ -741,95 +727,11 @@ function selectType(type){
 function previewThumb(){
   const url=document.getElementById('edit-thumb').value;
   const box=document.getElementById('thumb-preview-box');
-  if(url){box.innerHTML=`<img src="${url}" alt="preview" style="width:100%;height:100%;object-fit:cover;border-radius:10px" onerror="this.parentNode.innerHTML='<span style=font-size:11px;color:var(--text-light)>Invalid URL</span>'">`;}
+  if(url){box.innerHTML=`<img src="${url}" alt="preview" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.innerHTML='<span style=font-size:11px;color:var(--ink-lt)>Invalid URL</span>'">`;}
   else resetThumbPreview();
 }
-function resetThumbPreview(){document.getElementById('thumb-preview-box').innerHTML='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:24px;height:24px;color:var(--teal-dk)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>';}
-/* ── AUTO-FETCH OG IMAGE ── */
-async function autoFetchThumb(){
-  const url = document.getElementById('edit-url').value.trim();
-  if(!url){ setFetchStatus('error','Paste a URL in the link field first.'); return; }
-
-  const isInstagram = url.includes('instagram.com');
-  if(isInstagram){
-    setFetchStatus('warn','Instagram blocks auto-fetch. Upload your own thumbnail instead.');
-    return;
-  }
-
-  setFetchStatus('loading','Fetching image from URL…');
-  document.getElementById('auto-fetch-btn').disabled = true;
-
-  let imgUrl = '';
-
-  const proxies = [
-    'https://api.allorigins.win/get?url=',
-    'https://api.codetabs.com/v1/proxy?quest='
-  ];
-
-  for(const proxy of proxies){
-    try{
-      const res = await fetch(proxy + encodeURIComponent(url));
-      const json = proxy.includes('allorigins') ? await res.json() : null;
-      const html = json ? (json.contents||'') : await res.text();
-      if(!html) continue;
-
-      const ogMatch = html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i)
-                   || html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i);
-      if(ogMatch){ imgUrl = ogMatch[1]; break; }
-
-      const twMatch = html.match(/<meta[^>]+name=["']twitter:image["'][^>]+content=["']([^"']+)["']/i)
-                   || html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+name=["']twitter:image["']/i);
-      if(twMatch){ imgUrl = twMatch[1]; break; }
-    }catch(e){ continue; }
-  }
-
-  if(imgUrl){
-    if(imgUrl.startsWith('//')){
-      imgUrl = 'https:' + imgUrl;
-    } else if(imgUrl.startsWith('/')){
-      try{ imgUrl = new URL(url).origin + imgUrl; }catch(e){}
-    }
-    document.getElementById('edit-thumb').value = imgUrl;
-    previewThumb();
-    setFetchStatus('success','Image found! Check the preview below.');
-  } else {
-    setFetchStatus('warn','No image found — paste the image URL directly or upload your own.');
-  }
-
-  document.getElementById('auto-fetch-btn').disabled = false;
-}
-
-function setFetchStatus(type, msg){
-  const el = document.getElementById('fetch-status');
-  const colors = { loading:'var(--teal-dk)', success:'#2E7D32', warn:'#BA7517', error:'#E24B4A' };
-  const icons  = { loading:'⏳ ', success:'✓ ', warn:'⚠ ', error:'✕ ' };
-  el.style.color = colors[type];
-  el.textContent = (icons[type]||'') + msg;
-}
-
-/* ── UPLOAD OWN THUMBNAIL ── */
-function handleThumbUpload(e){
-  const file = e.target.files[0];
-  if(!file) return;
-  if(!file.type.startsWith('image/')){
-    setFetchStatus('error','Please choose an image file (jpg, png, webp, etc.)');
-    return;
-  }
-  if(file.size > 5 * 1024 * 1024){
-    setFetchStatus('warn','Image is over 5MB — try a smaller file for faster loading.');
-  }
-  const reader = new FileReader();
-  reader.onload = function(ev){
-    const dataUrl = ev.target.result;
-    document.getElementById('edit-thumb').value = dataUrl;
-    previewThumb();
-    setFetchStatus('success','Photo uploaded and ready — hit Save link to store it.');
-  };
-  reader.readAsDataURL(file);
-  e.target.value = '';
-}
-
-async function saveLink(){
+function resetThumbPreview(){document.getElementById('thumb-preview-box').innerHTML='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:22px;height:22px;color:var(--ink-lt)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>';}
+function saveLink(){
   const title=document.getElementById('edit-title').value.trim();
   if(!title){alert('Please enter a title.');return;}
   let url=document.getElementById('edit-url').value.trim();
@@ -838,82 +740,64 @@ async function saveLink(){
   const thumb=document.getElementById('edit-thumb').value.trim();
   if(editingId){const idx=data.links.findIndex(l=>l.id===editingId);if(idx>-1)data.links[idx]={...data.links[idx],type:editingType,title,desc,url,thumb};}
   else{data.links.push({id:'l'+Date.now(),type:editingType,title,desc,url,thumb,visible:true});}
-  await saveData();renderAdminLinks();renderPublic();closeEditModal();
+  cloudSave();renderAdminLinks();renderPublic();closeEditModal();
   showToast(editingId?'Link updated!':'Link added!');
 }
 
 /* ── AUTH ── */
-function showLogin(){document.getElementById('pw-input').value='';document.getElementById('login-error').style.display='none';document.getElementById('login-modal').classList.add('open');setTimeout(()=>document.getElementById('pw-input').focus(),300);}
+function showLogin(){
+  document.getElementById('pw-input').value='';
+  document.getElementById('login-error').style.display='none';
+  document.getElementById('login-modal').classList.add('open');
+  setTimeout(()=>document.getElementById('pw-input').focus(),300);
+}
 function closeLogin(){document.getElementById('login-modal').classList.remove('open');}
 function doLogin(){
   if(document.getElementById('pw-input').value===ADMIN_PW){
     closeLogin();
-    localStorage.setItem('lbd_session','1');
-    enterAdmin();
+    document.getElementById('public-page').style.display='none';
+    // admin trigger hidden by default
+    document.getElementById('admin-panel').style.display='block';
+    renderAdmin();
   } else {
     document.getElementById('login-error').style.display='block';
     document.getElementById('pw-input').value='';
     document.getElementById('pw-input').focus();
   }
 }
-function enterAdmin(){
-  document.getElementById('public-page').style.display='none';
-  document.getElementById('admin-panel').style.display='block';
-  renderAdmin();
-}
 function logout(){
-  localStorage.removeItem('lbd_session');
   document.getElementById('admin-panel').style.display='none';
   document.getElementById('public-page').style.display='block';
+  // admin trigger hidden by default
   renderPublic();
 }
-function previewPublic(){
-  document.getElementById('admin-panel').style.display='none';
-  document.getElementById('public-page').style.display='block';
-  renderPublic();
-}
-
-/* ── LONG-PRESS FOOTER TO OPEN ADMIN ── */
-(function(){
-  const el=document.getElementById('footer-trigger');
-  let timer=null;
-  let pressing=false;
-
-  function startPress(){
-    pressing=true;
-    el.style.opacity='0.45';
-    timer=setTimeout(()=>{
-      if(pressing){
-        el.style.opacity='1';
-        showLogin();
-      }
-    },2000);
-  }
-  function cancelPress(){
-    pressing=false;
-    clearTimeout(timer);
-    el.style.opacity='1';
-  }
-
-  el.addEventListener('mousedown',startPress);
-  el.addEventListener('touchstart',e=>{e.preventDefault();startPress();},{passive:false});
-  el.addEventListener('mouseup',cancelPress);
-  el.addEventListener('mouseleave',cancelPress);
-  el.addEventListener('touchend',cancelPress);
-  el.addEventListener('touchcancel',cancelPress);
-
-  el.addEventListener('contextmenu',e=>e.preventDefault());
-})();
+function previewPublic(){logout();}
 
 /* ── TOAST ── */
-function showToast(msg){const t=document.getElementById('toast');document.getElementById('toast-msg').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+function showToast(msg){
+  const t=document.getElementById('toast');
+  document.getElementById('toast-msg').textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
 
-loadData().then(()=>{
+/* ── LONG-PRESS ADMIN TRIGGER on footer ── */
+let pressTimer=null;
+const footerEl=document.getElementById('footer-trigger');
+footerEl.addEventListener('mousedown',()=>{pressTimer=setTimeout(showLogin,2000);});
+footerEl.addEventListener('mouseup',()=>clearTimeout(pressTimer));
+footerEl.addEventListener('mouseleave',()=>clearTimeout(pressTimer));
+footerEl.addEventListener('touchstart',e=>{e.preventDefault();pressTimer=setTimeout(showLogin,2000);},{passive:false});
+footerEl.addEventListener('touchend',()=>clearTimeout(pressTimer));
+footerEl.addEventListener('touchcancel',()=>clearTimeout(pressTimer));
+
+/* ── INIT ── */
+async function init(){
+  await unlockBin();
+  await cloudLoad();
   renderPublic();
-  if(localStorage.getItem('lbd_session')==='1'){
-    enterAdmin();
-  }
-});
+}
+init();
 </script>
 </body>
 </html>

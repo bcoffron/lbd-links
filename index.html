@@ -475,7 +475,9 @@ The Lunchbox Dad</textarea>
 
 <script>
 const ADMIN_PW='Mypassislbd1813!';
-const GAS_URL='https://script.google.com/macros/s/AKfycbw2FX1aZ0FSQ5sx2EOiLJGayaQ_yq66vBPQS6Jv3vtxWkLCWvTmVmGO-s1--kDEn_7w/exec';
+const SB_URL='https://podmejljpaxushzatetz.supabase.co';
+const SB_KEY='sb_publishable_xKKO97UbihoZEXoLIJzEDg_n7JdzOb5';
+const SB_TABLE='links_data';
 
 const SOCIAL_DEFS={
   instagram:{label:'Instagram',ph:'https://instagram.com/lunchboxdad',icon:'<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke-width="2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2.5"/></svg>'},
@@ -536,12 +538,25 @@ async function cloudLoad(){
 async function cloudSave(){
   if(saving)return; saving=true;
   try{
+    // Try regular POST first
     const r=await fetch(GAS_URL,{
       method:'POST',
       headers:{'Content-Type':'text/plain'},
       body:JSON.stringify(data)
     });
-    if(!r.ok) console.warn('Cloud save failed:',r.status);
+    if(r.ok){
+      saving=false;
+      return;
+    }
+  }catch(e){}
+  // Fallback: no-cors (can't read response but data gets through)
+  try{
+    await fetch(GAS_URL,{
+      method:'POST',
+      mode:'no-cors',
+      headers:{'Content-Type':'text/plain'},
+      body:JSON.stringify(data)
+    });
   }catch(e){console.warn('Cloud save error:',e);}
   saving=false;
 }

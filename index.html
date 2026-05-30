@@ -252,7 +252,41 @@ textarea.field-input{resize:vertical;min-height:70px;line-height:1.5;}
 .toast{position:fixed;top:16px;left:50%;transform:translateX(-50%) translateY(-80px);background:var(--ink);color:var(--cream);padding:9px 18px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;z-index:999;transition:transform .3s ease;white-space:nowrap;display:flex;align-items:center;gap:5px;box-shadow:0 4px 16px rgba(26,10,10,.25);letter-spacing:.3px;}
 .toast.show{transform:translateX(-50%) translateY(0);}
 .toast svg{width:14px;height:14px;}
+
+/* ── ANALYTICS TAB ── */
+.admin-tabs{display:flex;border-bottom:1px solid var(--cream-border);background:var(--cream);}
+.admin-tab{flex:1;padding:10px 0;font-size:12px;font-weight:700;color:var(--ink-lt);text-align:center;cursor:pointer;border-bottom:2px solid transparent;font-family:'Outfit',sans-serif;letter-spacing:.3px;text-transform:uppercase;transition:all .15s;}
+.admin-tab.active{color:var(--burg);border-bottom-color:var(--burg);}
+.admin-tab-content{display:none;}
+.admin-tab-content.active{display:block;}
+.analytics-wrap{padding:14px;}
+.analytics-refresh-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.analytics-refresh-info{font-size:11px;color:var(--ink-lt);font-family:'Outfit',sans-serif;}
+.analytics-refresh-btn{display:flex;align-items:center;gap:5px;padding:6px 12px;background:transparent;border:1px solid var(--cream-border);color:var(--burg);font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;transition:all .15s;}
+.analytics-refresh-btn:hover{background:var(--burg-lt);border-color:var(--burg);}
+.analytics-refresh-btn svg{width:13px;height:13px;}
+.analytics-refresh-btn.spinning svg{animation:spin .6s linear infinite;}
+@keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.metrics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;}
+.metric-card{background:var(--white);border:1px solid var(--cream-border);padding:10px 8px;text-align:center;}
+.metric-val{font-size:22px;font-weight:700;color:var(--ink);font-family:'Outfit',sans-serif;line-height:1;}
+.metric-lbl{font-size:10px;color:var(--ink-lt);margin-top:3px;font-family:'Outfit',sans-serif;text-transform:uppercase;letter-spacing:.5px;}
+.metric-delta{font-size:10px;color:#3B6D11;margin-top:2px;font-family:'Outfit',sans-serif;}
+.chart-card{background:var(--white);border:1px solid var(--cream-border);padding:12px;margin-bottom:12px;}
+.chart-card-title{font-size:11px;font-weight:700;color:var(--burg);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;font-family:'Outfit',sans-serif;}
+.analytics-table{width:100%;border-collapse:collapse;font-size:11px;}
+.analytics-table th{text-align:left;padding:6px 8px;font-size:10px;font-weight:700;color:var(--ink-lt);border-bottom:1px solid var(--cream-border);text-transform:uppercase;letter-spacing:.5px;font-family:'Outfit',sans-serif;}
+.analytics-table td{padding:8px 8px;border-bottom:1px solid var(--cream-border);color:var(--ink);font-family:'Outfit',sans-serif;}
+.analytics-table tr:last-child td{border-bottom:none;}
+.rank-badge{display:inline-block;background:var(--burg-lt);color:var(--burg);font-size:9px;padding:1px 5px;font-weight:700;font-family:'Outfit',sans-serif;}
+.sparkline-wrap{display:inline-flex;align-items:flex-end;gap:1px;height:16px;vertical-align:middle;}
+.spark-bar{width:3px;border-radius:1px 1px 0 0;background:var(--burg);}
+.spark-bar.dim{background:var(--burg-lt);}
+.analytics-empty{text-align:center;padding:32px 16px;color:var(--ink-lt);font-size:13px;font-family:'Outfit',sans-serif;}
+.analytics-empty svg{width:32px;height:32px;color:var(--cream-border);display:block;margin:0 auto 8px;}
+
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 </head>
 <body>
 
@@ -310,7 +344,13 @@ textarea.field-input{resize:vertical;min-height:70px;line-height:1.5;}
       </button>
     </div>
   </div>
+  <div class="admin-tabs">
+    <div class="admin-tab active" onclick="switchTab('links')">Links</div>
+    <div class="admin-tab" onclick="switchTab('socials')">Socials</div>
+    <div class="admin-tab" onclick="switchTab('analytics')">Analytics</div>
+  </div>
 
+  <div id="tab-links" class="admin-tab-content active">
   <!-- PROFILE -->
   <div class="admin-section">
     <div class="admin-section-hdr">
@@ -355,6 +395,8 @@ The Lunchbox Dad</textarea>
     </div>
   </div>
 
+  </div>
+  <div id="tab-socials" class="admin-tab-content">
   <!-- SOCIALS -->
   <div class="admin-section">
     <div class="admin-section-hdr">
@@ -367,6 +409,8 @@ The Lunchbox Dad</textarea>
     <div id="social-admin-list"></div>
   </div>
 
+  </div>
+  <div id="tab-links2" class="admin-tab-content" id="tab-links-section">
   <!-- LINKS -->
   <div class="admin-section">
     <div class="admin-section-hdr">
@@ -390,6 +434,38 @@ The Lunchbox Dad</textarea>
     <div>
       <div class="add-link-nudge-text">Add another link</div>
       <div class="add-link-nudge-sub">Blog post, social, email, shop, video, or custom</div>
+    </div>
+  </div>
+  </div>
+
+  <!-- ANALYTICS TAB -->
+  <div id="tab-analytics" class="admin-tab-content">
+    <div class="analytics-wrap">
+      <div class="analytics-refresh-row">
+        <div class="analytics-refresh-info" id="analytics-last-refresh">Loading...</div>
+        <button class="analytics-refresh-btn" id="analytics-refresh-btn" onclick="loadAnalytics()">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          Refresh
+        </button>
+      </div>
+      <div class="metrics-grid" id="analytics-metrics">
+        <div class="metric-card"><div class="metric-val">—</div><div class="metric-lbl">All time</div></div>
+        <div class="metric-card"><div class="metric-val">—</div><div class="metric-lbl">This week</div></div>
+        <div class="metric-card"><div class="metric-val">—</div><div class="metric-lbl">Today</div></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-card-title">Clicks by link — all time</div>
+        <div style="position:relative;height:160px;">
+          <canvas id="analytics-bar-chart" role="img" aria-label="Bar chart showing clicks per link"></canvas>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-card-title">Link performance breakdown</div>
+        <table class="analytics-table" id="analytics-table">
+          <thead><tr><th>Link</th><th>Total</th><th>7 days</th><th>Today</th><th>Trend</th></tr></thead>
+          <tbody id="analytics-tbody"><tr><td colspan="5" class="analytics-empty">Loading...</td></tr></tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
@@ -630,6 +706,7 @@ function renderPublic(){
     a.href=feat.url||'#';
     a.target=feat.type==='email'?'_self':'_blank';
     a.rel='noopener';
+    a.addEventListener('click',()=>trackClick(feat.id,feat.title));
     const thumbHtml=feat.thumb
       ?`<div class="featured-thumb"><img src="${feat.thumb}" alt="${feat.title}" onerror="this.style.display='none'"></div>`
       :`<div class="featured-thumb-icon">${getTypeIcon(feat.type)}</div>`;
@@ -649,6 +726,7 @@ function renderPublic(){
     card.href=link.url||'#';
     card.target=link.type==='email'?'_self':'_blank';
     card.rel='noopener';
+    card.addEventListener('click',()=>trackClick(link.id,link.title));
     const thumbHtml=link.thumb
       ?`<div class="link-thumb"><img src="${link.thumb}" alt="${link.title}" onerror="this.style.display='none'"></div>`
       :`<div class="link-thumb-icon">${getTypeIcon(link.type)}</div>`;
@@ -885,6 +963,154 @@ footerEl.addEventListener('mouseleave',()=>clearTimeout(pressTimer));
 footerEl.addEventListener('touchstart',e=>{e.preventDefault();pressTimer=setTimeout(showLogin,2000);},{passive:false});
 footerEl.addEventListener('touchend',()=>clearTimeout(pressTimer));
 footerEl.addEventListener('touchcancel',()=>clearTimeout(pressTimer));
+
+
+/* ── CLICK TRACKING ── */
+async function trackClick(linkId, linkTitle){
+  try{
+    await fetch(`${SB_URL}/rest/v1/clicks`,{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'apikey':SB_KEY,
+        'Authorization':'Bearer '+SB_KEY,
+        'Prefer':'return=minimal'
+      },
+      body:JSON.stringify({link_id:linkId,link_title:linkTitle})
+    });
+  }catch(e){}
+}
+
+/* ── ANALYTICS ── */
+let analyticsChart=null;
+let analyticsLastLoaded=null;
+
+async function loadAnalytics(){
+  const btn=document.getElementById('analytics-refresh-btn');
+  const info=document.getElementById('analytics-last-refresh');
+  if(btn) btn.classList.add('spinning');
+
+  try{
+    // Fetch all clicks
+    const r=await fetch(`${SB_URL}/rest/v1/clicks?select=link_id,link_title,clicked_at&order=clicked_at.desc&limit=10000`,{
+      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}
+    });
+    if(!r.ok) throw new Error('Failed to load');
+    const clicks=await r.json();
+
+    const now=new Date();
+    const todayStart=new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime();
+    const weekStart=todayStart-(6*24*60*60*1000);
+
+    // Totals
+    const total=clicks.length;
+    const thisWeek=clicks.filter(c=>new Date(c.clicked_at).getTime()>=weekStart).length;
+    const today=clicks.filter(c=>new Date(c.clicked_at).getTime()>=todayStart).length;
+
+    // Update metric cards
+    const metricsEl=document.getElementById('analytics-metrics');
+    metricsEl.innerHTML=`
+      <div class="metric-card"><div class="metric-val">${total}</div><div class="metric-lbl">All time</div></div>
+      <div class="metric-card"><div class="metric-val">${thisWeek}</div><div class="metric-lbl">This week</div></div>
+      <div class="metric-card"><div class="metric-val">${today}</div><div class="metric-lbl">Today</div></div>
+    `;
+
+    // Group by link
+    const linkMap={};
+    clicks.forEach(c=>{
+      if(!linkMap[c.link_id]) linkMap[c.link_id]={title:c.link_title,total:0,week:0,today:0,days:Array(7).fill(0)};
+      linkMap[c.link_id].total++;
+      const t=new Date(c.clicked_at).getTime();
+      if(t>=weekStart) linkMap[c.link_id].week++;
+      if(t>=todayStart) linkMap[c.link_id].today++;
+      // sparkline: last 7 days
+      for(let i=0;i<7;i++){
+        const dayStart=todayStart-(i*24*60*60*1000);
+        const dayEnd=dayStart+(24*60*60*1000);
+        if(t>=dayStart&&t<dayEnd) linkMap[c.link_id].days[6-i]++;
+      }
+    });
+
+    const sorted=Object.entries(linkMap).sort((a,b)=>b[1].total-a[1].total);
+
+    // Bar chart
+    const labels=sorted.map(([,v])=>v.title.length>14?v.title.substring(0,14)+'…':v.title);
+    const values=sorted.map(([,v])=>v.total);
+    const canvas=document.getElementById('analytics-bar-chart');
+    if(analyticsChart) analyticsChart.destroy();
+    analyticsChart=new Chart(canvas,{
+      type:'bar',
+      data:{
+        labels,
+        datasets:[{
+          label:'Clicks',
+          data:values,
+          backgroundColor:'#C41E3A',
+          borderRadius:2,
+        }]
+      },
+      options:{
+        responsive:true,
+        maintainAspectRatio:false,
+        plugins:{legend:{display:false}},
+        scales:{
+          x:{ticks:{font:{size:9},color:'#9a8a82',maxRotation:30},grid:{display:false}},
+          y:{ticks:{font:{size:9},color:'#9a8a82'},grid:{color:'rgba(0,0,0,.05)'}}
+        }
+      }
+    });
+
+    // Table
+    const tbody=document.getElementById('analytics-tbody');
+    if(sorted.length===0){
+      tbody.innerHTML='<tr><td colspan="5" class="analytics-empty"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>No clicks yet — share your link to start tracking!</td></tr>';
+    } else {
+      tbody.innerHTML=sorted.map(([,v],i)=>{
+        const maxDay=Math.max(...v.days,1);
+        const sparks=v.days.map(d=>`<div class="spark-bar${d===0?' dim':''}" style="height:${Math.max(2,Math.round((d/maxDay)*14))}px"></div>`).join('');
+        return `<tr>
+          <td>${i===0?'<span class="rank-badge">#1</span> ':''}<span style="font-size:11px">${v.title.length>16?v.title.substring(0,16)+'…':v.title}</span></td>
+          <td style="font-weight:700">${v.total}</td>
+          <td>${v.week}</td>
+          <td>${v.today}</td>
+          <td><div class="sparkline-wrap">${sparks}</div></td>
+        </tr>`;
+      }).join('');
+    }
+
+    analyticsLastLoaded=new Date();
+    if(info) info.textContent='Updated '+analyticsLastLoaded.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+
+  }catch(e){
+    console.warn('Analytics load error:',e);
+    if(info) info.textContent='Failed to load — tap refresh';
+  }
+  if(btn) btn.classList.remove('spinning');
+}
+
+/* ── TAB SWITCHING ── */
+function switchTab(tab){
+  // Update tab buttons
+  document.querySelectorAll('.admin-tab').forEach((el,i)=>{
+    el.classList.toggle('active',['links','socials','analytics'][i]===tab);
+  });
+  // Show/hide content — links tab spans two divs
+  document.getElementById('tab-links').style.display=tab==='links'?'block':'none';
+  document.getElementById('tab-links2').style.display=tab==='links'?'block':'none';
+  document.getElementById('tab-socials').style.display=tab==='socials'?'block':'none';
+  document.getElementById('tab-analytics').style.display=tab==='analytics'?'block':'none';
+  // Load analytics when switching to that tab
+  if(tab==='analytics'){
+    // Auto-load if never loaded, or if it's past 4am CT and we haven't loaded today
+    const now=new Date();
+    const ctOffset=-5*60; // CT offset in minutes (CST; CDT would be -4*60)
+    const ctNow=new Date(now.getTime()+(ctOffset+now.getTimezoneOffset())*60000);
+    const ct4am=new Date(ctNow.getFullYear(),ctNow.getMonth(),ctNow.getDate(),4,0,0);
+    const shouldAutoLoad=!analyticsLastLoaded||(ctNow>=ct4am&&analyticsLastLoaded<ct4am);
+    if(shouldAutoLoad) loadAnalytics();
+  }
+}
+
 
 /* ── INIT ── */
 async function init(){

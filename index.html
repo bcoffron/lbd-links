@@ -890,13 +890,19 @@ footerEl.addEventListener('touchcancel',()=>clearTimeout(pressTimer));
 
 /* ── INIT ── */
 async function init(){
-  // Load localStorage immediately for instant render
-  const hasLocal = localLoad();
-  if(hasLocal) renderPublic();
-  // Then sync from GitHub (authoritative source)
-  const gotCloud = await cloudLoad();
-  if(gotCloud) renderPublic();
-  else if(!hasLocal) renderPublic();
+  try{
+    // Load localStorage immediately for instant render
+    const hasLocal = localLoad();
+    renderPublic(); // always render, even with defaults
+    // Then try cloud sync
+    try{
+      const gotCloud = await cloudLoad();
+      if(gotCloud) renderPublic();
+    }catch(e){ console.warn('Cloud sync skipped:',e); }
+  }catch(e){
+    console.warn('Init error:',e);
+    renderPublic(); // last resort fallback
+  }
 }
 init();
 </script>

@@ -1,0 +1,12 @@
+{
+  "profile":{"name":"Beau Coffron,\nThe Lunchbox Dad","handle":"@lunchboxdad · Oklahoma City","bio":"\"Making food fun & affordable for families since 2012.\"","email":"lunchboxdad@emcpower.co","hero":""},
+  "socialOrder":["instagram","tiktok","youtube","facebook","pinterest","twitter","threads"],
+  "socialValues":{"instagram":"https://instagram.com/lunchboxdad","tiktok":"","youtube":"https://youtube.com/lunchboxdad","facebook":"https://facebook.com/lunchboxdad","pinterest":"https://pinterest.com/lunchboxdad","twitter":"https://twitter.com/lunchboxdad","threads":""},
+  "socialVisible":{"instagram":true,"tiktok":true,"youtube":true,"facebook":true,"pinterest":true,"twitter":true,"threads":true},
+  "links":[
+    {"id":"l1","type":"blog","title":"Ferrari F1 Lunch For Your Kids!","desc":"Fan favorite · lunchboxdad.com","url":"https://www.lunchboxdad.com/2025/05/how-to-make-ferrari-f1-lunch-for-your.html","thumb":"","visible":true},
+    {"id":"l2","type":"blog","title":"OSU Lunch for College Students!","desc":"Latest post · lunchboxdad.com","url":"https://www.lunchboxdad.com/2025/11/how-to-make-oklahoma-state-university.html","thumb":"","visible":true},
+    {"id":"l3","type":"link","title":"Free Recipe Ideas","desc":"Meal ideas + hacks for families","url":"https://www.lunchboxdad.com","thumb":"","visible":true},
+    {"id":"l4","type":"link","title":"Work With Me","desc":"Brand collabs & media inquiries","url":"https://www.lunchboxdad.com","thumb":"","visible":true}
+  ]
+}

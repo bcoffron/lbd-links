@@ -475,9 +475,10 @@ The Lunchbox Dad</textarea>
 
 <script>
 const ADMIN_PW='Mypassislbd1813!';
-const JSONBIN_KEY='$2a$10$8fLozsm78KbjkbdnKQ7gtOyMgpFtsIRdjnmG7Sx91CSxAaaR.IRB6';
-const JSONBIN_BIN='6a19ffa221f9ee59d29b9b60';
-const JSONBIN_URL='https://api.jsonbin.io/v3/b/'+JSONBIN_BIN;
+const GH_TOKEN='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';
+const GH_REPO='bcoffron/lbd-links';
+const GH_FILE='data.json';
+const GH_API=`https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`;
 
 const SOCIAL_DEFS={
   instagram:{label:'Instagram',ph:'https://instagram.com/lunchboxdad',icon:'<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke-width="2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2.5"/></svg>'},
@@ -504,8 +505,9 @@ let data={
 
 let editingId=null,editingType='link',dragSrc=null,dragList=null,saving=false;
 
-/* ── STORAGE: localStorage primary, JSONbin cloud backup ── */
+/* ── STORAGE: localStorage + GitHub API cross-device sync ── */
 const LS_KEY='lbd_v5';
+let ghSHA=null; // GitHub file SHA needed for updates
 
 function localSave(){
   try{localStorage.setItem(LS_KEY,JSON.stringify(data));}catch(e){}
@@ -515,33 +517,47 @@ function localLoad(){
   return false;
 }
 
-async function unlockBin(){
-  try{
-    await fetch(JSONBIN_URL+'/meta',{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':JSONBIN_KEY,'X-Bin-Private':'false'},body:'{}' });
-  }catch(e){}
-}
 async function cloudLoad(){
   try{
-    const r=await fetch(JSONBIN_URL+'/latest',{headers:{'X-Master-Key':JSONBIN_KEY,'X-Bin-Meta':'false'}});
+    const r=await fetch(GH_API,{
+      headers:{'Authorization':'token '+GH_TOKEN,'Accept':'application/vnd.github.v3+json'}
+    });
     if(r.ok){
-      const d=await r.json();
-      if(d&&d.profile){
-        data=d;
-        localSave(); // cache cloud data locally too
+      const meta=await r.json();
+      ghSHA=meta.sha;
+      const content=JSON.parse(atob(meta.content.replace(/\n/g,'')));
+      if(content&&content.profile){
+        data=content;
+        localSave();
         return true;
       }
     }
   }catch(e){}
   return false;
 }
+
 async function cloudSave(){
   if(saving)return; saving=true;
   try{
-    await fetch(JSONBIN_URL,{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':JSONBIN_KEY},body:JSON.stringify(data)});
+    const body={
+      message:'Update links data',
+      content:btoa(unescape(encodeURIComponent(JSON.stringify(data)))),
+      branch:'main'
+    };
+    if(ghSHA) body.sha=ghSHA;
+    const r=await fetch(GH_API,{
+      method:'PUT',
+      headers:{'Authorization':'token '+GH_TOKEN,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},
+      body:JSON.stringify(body)
+    });
+    if(r.ok){
+      const result=await r.json();
+      ghSHA=result.content.sha;
+    }
   }catch(e){}
   saving=false;
 }
-// Save to both localStorage AND cloud
+
 function cloudSaveAll(){
   localSave();
   cloudSave();
@@ -871,14 +887,13 @@ footerEl.addEventListener('touchcancel',()=>clearTimeout(pressTimer));
 
 /* ── INIT ── */
 async function init(){
-  // Load from localStorage immediately so page renders fast
+  // Load localStorage immediately for instant render
   const hasLocal = localLoad();
   if(hasLocal) renderPublic();
-  // Then try to sync from cloud (may override local if cloud is newer)
-  await unlockBin();
+  // Then sync from GitHub (authoritative source)
   const gotCloud = await cloudLoad();
   if(gotCloud) renderPublic();
-  else if(!hasLocal) renderPublic(); // first ever load with no data
+  else if(!hasLocal) renderPublic();
 }
 init();
 </script>

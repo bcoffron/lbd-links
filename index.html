@@ -93,9 +93,9 @@ body{font-family:'Outfit',sans-serif;background:var(--cream);min-height:100vh;co
 .pub-email{font-size:15px;font-weight:700;color:var(--burg);letter-spacing:.2px;margin-bottom:14px;font-family:'Outfit',sans-serif;}
 
 /* ── SOCIAL PILLS ── */
-.social-row{display:flex;gap:7px;overflow-x:auto;padding-bottom:16px;border-bottom:1px solid var(--cream-border);-webkit-overflow-scrolling:touch;scrollbar-width:none;}
-.social-row::-webkit-scrollbar{display:none;}
-.social-pill{display:flex;align-items:center;gap:5px;background:var(--white);border:1px solid var(--cream-border);padding:6px 12px;font-size:11px;font-weight:700;color:var(--ink-mid);text-decoration:none;transition:all .18s ease;cursor:pointer;white-space:nowrap;font-family:'Outfit',sans-serif;letter-spacing:.3px;flex-shrink:0;}
+.social-row{display:flex;gap:7px;flex-wrap:wrap;padding-bottom:16px;border-bottom:1px solid var(--cream-border);}
+
+.social-pill{display:flex;align-items:center;gap:5px;background:var(--white);border:1px solid var(--cream-border);padding:6px 12px;font-size:11px;font-weight:700;color:var(--ink-mid);text-decoration:none;transition:all .18s ease;cursor:pointer;white-space:nowrap;font-family:'Outfit',sans-serif;letter-spacing:.3px;}
 .social-pill:hover{background:var(--burg);border-color:var(--burg);color:var(--white);transform:translateY(-1px);}
 .social-pill svg{width:13px;height:13px;flex-shrink:0;}
 
@@ -504,7 +504,17 @@ let data={
 
 let editingId=null,editingType='link',dragSrc=null,dragList=null,saving=false;
 
-/* ── JSONBIN CLOUD SYNC ── */
+/* ── STORAGE: localStorage primary, JSONbin cloud backup ── */
+const LS_KEY='lbd_v5';
+
+function localSave(){
+  try{localStorage.setItem(LS_KEY,JSON.stringify(data));}catch(e){}
+}
+function localLoad(){
+  try{const s=localStorage.getItem(LS_KEY);if(s){const d=JSON.parse(s);if(d&&d.profile){data=d;return true;}}}catch(e){}
+  return false;
+}
+
 async function unlockBin(){
   try{
     await fetch(JSONBIN_URL+'/meta',{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':JSONBIN_KEY,'X-Bin-Private':'false'},body:'{}' });
@@ -513,8 +523,16 @@ async function unlockBin(){
 async function cloudLoad(){
   try{
     const r=await fetch(JSONBIN_URL+'/latest',{headers:{'X-Master-Key':JSONBIN_KEY,'X-Bin-Meta':'false'}});
-    if(r.ok){const d=await r.json();if(d&&d.profile)data=d;}
+    if(r.ok){
+      const d=await r.json();
+      if(d&&d.profile){
+        data=d;
+        localSave(); // cache cloud data locally too
+        return true;
+      }
+    }
   }catch(e){}
+  return false;
 }
 async function cloudSave(){
   if(saving)return; saving=true;
@@ -522,6 +540,11 @@ async function cloudSave(){
     await fetch(JSONBIN_URL,{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':JSONBIN_KEY},body:JSON.stringify(data)});
   }catch(e){}
   saving=false;
+}
+// Save to both localStorage AND cloud
+function cloudSaveAll(){
+  localSave();
+  cloudSave();
 }
 
 /* ── AUTO-SAVE PROFILE ── */
@@ -531,7 +554,7 @@ function autoSaveProfile(){
   data.profile.bio    = document.getElementById('admin-bio').value;
   data.profile.email  = document.getElementById('admin-email').value;
   data.profile.hero   = document.getElementById('admin-hero').value;
-  cloudSave(); renderPublic(); updateHeroPreview();
+  cloudSaveAll(); renderPublic(); updateHeroPreview();
 }
 
 function updateHeroPreview(){
@@ -661,8 +684,8 @@ function renderAdminSocials(){
     bindDrag(row,'social',idx);list.appendChild(row);
   });
 }
-function autoSaveSocial(key){data.socialValues[key]=document.getElementById('social-input-'+key).value;cloudSave();renderPublic();}
-function toggleSocialVisible(key){data.socialVisible[key]=!data.socialVisible[key];cloudSave();renderPublic();}
+function autoSaveSocial(key){data.socialValues[key]=document.getElementById('social-input-'+key).value;cloudSaveAll();renderPublic();}
+function toggleSocialVisible(key){data.socialVisible[key]=!data.socialVisible[key];cloudSaveAll();renderPublic();}
 
 /* ── LINKS ADMIN ── */
 function renderAdminLinks(){
@@ -692,8 +715,8 @@ function renderAdminLinks(){
     bindDrag(item,'links',idx);list.appendChild(item);
   });
 }
-function toggleLinkVisible(idx){data.links[idx].visible=!data.links[idx].visible;cloudSave();renderAdminLinks();renderPublic();}
-function deleteLink(idx){if(!confirm('Delete "'+data.links[idx].title+'"?'))return;data.links.splice(idx,1);cloudSave();renderAdminLinks();renderPublic();showToast('Link deleted');}
+function toggleLinkVisible(idx){data.links[idx].visible=!data.links[idx].visible;cloudSaveAll();renderAdminLinks();renderPublic();}
+function deleteLink(idx){if(!confirm('Delete "'+data.links[idx].title+'"?'))return;data.links.splice(idx,1);cloudSaveAll();renderAdminLinks();renderPublic();showToast('Link deleted');}
 
 /* ── DRAG & DROP ── */
 function bindDrag(el,listName,idx){
@@ -704,8 +727,8 @@ function bindDrag(el,listName,idx){
   el.addEventListener('drop',e=>{
     e.preventDefault();
     if(dragSrc===null||dragSrc===idx||dragList!==listName)return;
-    if(listName==='social'){const m=data.socialOrder.splice(dragSrc,1)[0];data.socialOrder.splice(idx,0,m);cloudSave();renderAdminSocials();renderPublic();}
-    else{const m=data.links.splice(dragSrc,1)[0];data.links.splice(idx,0,m);cloudSave();renderAdminLinks();renderPublic();}
+    if(listName==='social'){const m=data.socialOrder.splice(dragSrc,1)[0];data.socialOrder.splice(idx,0,m);cloudSaveAll();renderAdminSocials();renderPublic();}
+    else{const m=data.links.splice(dragSrc,1)[0];data.links.splice(idx,0,m);cloudSaveAll();renderAdminLinks();renderPublic();}
     dragSrc=null;dragList=null;
   });
 }
@@ -848,9 +871,14 @@ footerEl.addEventListener('touchcancel',()=>clearTimeout(pressTimer));
 
 /* ── INIT ── */
 async function init(){
+  // Load from localStorage immediately so page renders fast
+  const hasLocal = localLoad();
+  if(hasLocal) renderPublic();
+  // Then try to sync from cloud (may override local if cloud is newer)
   await unlockBin();
-  await cloudLoad();
-  renderPublic();
+  const gotCloud = await cloudLoad();
+  if(gotCloud) renderPublic();
+  else if(!hasLocal) renderPublic(); // first ever load with no data
 }
 init();
 </script>

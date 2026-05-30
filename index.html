@@ -517,13 +517,17 @@ function localLoad(){
 
 async function cloudLoad(){
   try{
-    // Add cache-buster so we always get fresh data
-    const r=await fetch(GAS_URL+'?t='+Date.now(),{method:'GET',cache:'no-store'});
+    const r=await fetch(`${SB_URL}/rest/v1/${SB_TABLE}?id=eq.1&select=data`,{
+      headers:{
+        'apikey':SB_KEY,
+        'Authorization':'Bearer '+SB_KEY
+      },
+      cache:'no-store'
+    });
     if(r.ok){
-      const txt=await r.text();
-      const trimmed=txt.trim();
-      if(trimmed.startsWith('{')){
-        const d=JSON.parse(trimmed);
+      const rows=await r.json();
+      if(rows&&rows.length>0&&rows[0].data){
+        const d=JSON.parse(rows[0].data);
         if(d&&d.profile){
           data=d;
           localSave();
@@ -538,25 +542,21 @@ async function cloudLoad(){
 async function cloudSave(){
   if(saving)return; saving=true;
   try{
-    // Try regular POST first
-    const r=await fetch(GAS_URL,{
-      method:'POST',
-      headers:{'Content-Type':'text/plain'},
-      body:JSON.stringify(data)
+    const r=await fetch(`${SB_URL}/rest/v1/${SB_TABLE}?id=eq.1`,{
+      method:'PATCH',
+      headers:{
+        'Content-Type':'application/json',
+        'apikey':SB_KEY,
+        'Authorization':'Bearer '+SB_KEY
+      },
+      body:JSON.stringify({data:JSON.stringify(data)})
     });
-    if(r.ok){
-      saving=false;
-      return;
+    if(r.ok||r.status===204){
+      console.log('Cloud save OK');
+    } else {
+      const t=await r.text();
+      console.warn('Cloud save failed:',r.status,t);
     }
-  }catch(e){}
-  // Fallback: no-cors (can't read response but data gets through)
-  try{
-    await fetch(GAS_URL,{
-      method:'POST',
-      mode:'no-cors',
-      headers:{'Content-Type':'text/plain'},
-      body:JSON.stringify(data)
-    });
   }catch(e){console.warn('Cloud save error:',e);}
   saving=false;
 }

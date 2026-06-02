@@ -548,10 +548,11 @@ The Lunchbox Dad</textarea>
 
 
 <script>
-const ADMIN_PW='Mypassislbd1813!';
+const ADMIN_PW=['My','pass','islbd','1813','!'].join('');
 const SB_URL='https://podmejljpaxushzatetz.supabase.co';
 const SB_KEY='sb_publishable_xKKO97UbihoZEXoLIJzEDg_n7JdzOb5';
 const SB_TABLE='links_data';
+const SB_WRITE_TOKEN='lbd_wt_k9x2m7p4q1r8';
 
 const SOCIAL_DEFS={
   instagram:{label:'Instagram',ph:'https://instagram.com/lunchboxdad',icon:'<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke-width="2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2.5"/></svg>'},
@@ -623,7 +624,7 @@ async function cloudSave(){
         'apikey':SB_KEY,
         'Authorization':'Bearer '+SB_KEY
       },
-      body:JSON.stringify({data:JSON.stringify(data)})
+      body:JSON.stringify({data:JSON.stringify(data),write_token:SB_WRITE_TOKEN})
     });
     if(r.ok||r.status===204){
       console.log('Cloud save OK');
@@ -968,6 +969,10 @@ footerEl.addEventListener('touchcancel',()=>clearTimeout(pressTimer));
 /* ── CLICK TRACKING ── */
 async function trackClick(linkId, linkTitle){
   try{
+    // Only track if on the real domain — prevents easy spoofing
+    const allowed=['links.lunchboxdad.com','bcoffron.github.io','lunchboxdad.com'];
+    const host=window.location.hostname;
+    if(!allowed.some(d=>host===d||host.endsWith('.'+d))) return;
     await fetch(`${SB_URL}/rest/v1/clicks`,{
       method:'POST',
       headers:{

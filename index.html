@@ -20,7 +20,7 @@
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
   font-src 'self' https://fonts.gstatic.com;
   img-src 'self' data: https: blob:;
-  connect-src 'self' https://podmejljpaxushzatetz.supabase.co https://api.allorigins.win https://api.codetabs.com https://corsproxy.io https://thingproxy.freeboard.io;
+  connect-src 'self' https://podmejljpaxushzatetz.supabase.co https://api.allorigins.win https://api.codetabs.com https://corsproxy.io;
   frame-ancestors 'none';
 ">
 <meta name="description" content="Food Art + Recipes · Creative lunches · Making food fun & affordable for families since 2012 · Oklahoma City">
@@ -908,43 +908,44 @@ async function autoFetchThumb(){
     return null;
   }
 
-  // Method 1: allorigins.win
-  async function tryAllOrigins(){
-    const r=await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,{signal:AbortSignal.timeout(6000)});
-    if(!r.ok) throw new Error('bad status');
-    return extractOgImage(await r.text());
-  }
-
-  // Method 2: codetabs proxy
-  async function tryCodetabs(){
-    const r=await fetch(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,{signal:AbortSignal.timeout(6000)});
-    if(!r.ok) throw new Error('bad status');
-    return extractOgImage(await r.text());
-  }
-
-  // Method 3: allorigins.win JSON wrapper (different endpoint, more reliable)
+  // Method 1: allorigins.win JSON (most reliable, returns JSON wrapper)
   async function tryAllOriginsJSON(){
-    const r=await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,{signal:AbortSignal.timeout(6000)});
+    const r=await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,{signal:AbortSignal.timeout(8000)});
     if(!r.ok) throw new Error('bad status');
     const d=await r.json();
     return extractOgImage(d.contents||'');
   }
 
-  // Method 4: corsproxy.io
+  // Method 2: corsproxy.io
   async function tryCorsProxyIO(){
-    const r=await fetch(`https://corsproxy.io/?${encodeURIComponent(url)}`,{signal:AbortSignal.timeout(6000)});
+    const r=await fetch(`https://corsproxy.io/?url=${encodeURIComponent(url)}`,{signal:AbortSignal.timeout(8000)});
     if(!r.ok) throw new Error('bad status');
     return extractOgImage(await r.text());
   }
 
-  // Method 5: htmlpreview proxy (good for blog sites)
-  async function tryThingProxy(){
-    const r=await fetch(`https://thingproxy.freeboard.io/fetch/${url}`,{signal:AbortSignal.timeout(6000)});
+  // Method 3: allorigins.win raw
+  async function tryAllOriginsRaw(){
+    const r=await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,{signal:AbortSignal.timeout(8000)});
     if(!r.ok) throw new Error('bad status');
     return extractOgImage(await r.text());
   }
 
-  const methods=[tryAllOrigins, tryCodetabs, tryAllOriginsJSON, tryCorsProxyIO, tryThingProxy];
+  // Method 4: codetabs proxy
+  async function tryCodetabs(){
+    const r=await fetch(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,{signal:AbortSignal.timeout(8000)});
+    if(!r.ok) throw new Error('bad status');
+    return extractOgImage(await r.text());
+  }
+
+  // Method 5: htmlpreview.github.io proxy
+  async function tryHtmlPreview(){
+    const r=await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://htmlpreview.github.io/?'+url)}`,{signal:AbortSignal.timeout(8000)});
+    if(!r.ok) throw new Error('bad status');
+    const d=await r.json();
+    return extractOgImage(d.contents||'');
+  }
+
+  const methods=[tryAllOriginsJSON, tryCorsProxyIO, tryAllOriginsRaw, tryCodetabs, tryHtmlPreview];
   let found=false;
 
   for(const method of methods){

@@ -913,7 +913,13 @@ async function autoFetchThumb(){
     const r=await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,{signal:AbortSignal.timeout(8000)});
     if(!r.ok) throw new Error('bad status');
     const d=await r.json();
-    return extractOgImage(d.contents||'');
+    const txt=d.contents||'';
+    // Debug: log what we got
+    const ogIdx=txt.indexOf('og:image');
+    const bloggerIdx=txt.indexOf('blogger.googleusercontent');
+    console.log('[AutoFetch] Page length:',txt.length,'og:image at:',ogIdx,'blogger CDN at:',bloggerIdx);
+    if(ogIdx>-1) console.log('[AutoFetch] og:image context:',txt.substring(ogIdx-5,ogIdx+200));
+    return extractOgImage(txt);
   }
 
   // Method 2: corsproxy.io

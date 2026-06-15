@@ -890,19 +890,67 @@ async function autoFetchThumb(){
   const url=document.getElementById('edit-url').value.trim();
   if(!url){showToast('Paste a URL above first');return;}
   const btn=document.getElementById('fetch-thumb-btn');
-  btn.textContent='Fetching…';btn.disabled=true;
-  const proxies=[
-    `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-    `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`
-  ];
+  btn.innerHTML='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;animation:spin .8s linear infinite"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg> Fetching…';
+  btn.disabled=true;
+
+  // Extract og:image from HTML text
+  function extractOgImage(txt){
+    const patterns=[
+      /<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i,
+      /<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i,
+      /<meta[^>]+name=["']twitter:image["'][^>]+content=["']([^"']+)["']/i,
+      /<meta[^>]+content=["']([^"']+)["'][^>]+name=["']twitter:image["']/i,
+    ];
+    for(const p of patterns){
+      const m=txt.match(p);
+      if(m&&m[1]) return m[1].replace(/&amp;/g,'&');
+    }
+    return null;
+  }
+
+  // Method 1: allorigins.win
+  async function tryAllOrigins(){
+    const r=await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,{signal:AbortSignal.timeout(6000)});
+    if(!r.ok) throw new Error('bad status');
+    return extractOgImage(await r.text());
+  }
+
+  // Method 2: codetabs proxy
+  async function tryCodetabs(){
+    const r=await fetch(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,{signal:AbortSignal.timeout(6000)});
+    if(!r.ok) throw new Error('bad status');
+    return extractOgImage(await r.text());
+  }
+
+  // Method 3: allorigins.win JSON wrapper (different endpoint, more reliable)
+  async function tryAllOriginsJSON(){
+    const r=await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,{signal:AbortSignal.timeout(6000)});
+    if(!r.ok) throw new Error('bad status');
+    const d=await r.json();
+    return extractOgImage(d.contents||'');
+  }
+
+  // Method 4: corsproxy.io
+  async function tryCorsProxyIO(){
+    const r=await fetch(`https://corsproxy.io/?${encodeURIComponent(url)}`,{signal:AbortSignal.timeout(6000)});
+    if(!r.ok) throw new Error('bad status');
+    return extractOgImage(await r.text());
+  }
+
+  // Method 5: htmlpreview proxy (good for blog sites)
+  async function tryThingProxy(){
+    const r=await fetch(`https://thingproxy.freeboard.io/fetch/${url}`,{signal:AbortSignal.timeout(6000)});
+    if(!r.ok) throw new Error('bad status');
+    return extractOgImage(await r.text());
+  }
+
+  const methods=[tryAllOrigins, tryCodetabs, tryAllOriginsJSON, tryCorsProxyIO, tryThingProxy];
   let found=false;
-  for(const proxy of proxies){
+
+  for(const method of methods){
     try{
-      const r=await fetch(proxy);
-      const txt=await r.text();
-      const match=txt.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']|<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i);
-      if(match){
-        const imgUrl=(match[1]||match[2]).replace(/&amp;/g,'&');
+      const imgUrl=await method();
+      if(imgUrl){
         document.getElementById('edit-thumb').value=imgUrl;
         previewThumb();
         found=true;
@@ -911,7 +959,8 @@ async function autoFetchThumb(){
       }
     }catch(e){}
   }
-  if(!found) showToast('Couldn\'t auto-fetch — try pasting URL manually');
+
+  if(!found) showToast('Couldn\'t auto-fetch — try pasting image URL manually');
   btn.innerHTML='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg> Auto-fetch from URL above';
   btn.disabled=false;
 }

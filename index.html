@@ -20,7 +20,7 @@
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
   font-src 'self' https://fonts.gstatic.com;
   img-src 'self' data: https: blob:;
-  connect-src 'self' https://podmejljpaxushzatetz.supabase.co https://api.allorigins.win https://api.codetabs.com https://corsproxy.io;
+  connect-src 'self' https://podmejljpaxushzatetz.supabase.co https://api.allorigins.win https://lbd-ogimage-api.vercel.app;
   frame-ancestors 'none';
 ">
 <meta name="description" content="Food Art + Recipes · Creative lunches · Making food fun & affordable for families since 2012 · Oklahoma City">
@@ -575,6 +575,7 @@ const SB_URL='https://podmejljpaxushzatetz.supabase.co';
 const SB_KEY='sb_publishable_xKKO97UbihoZEXoLIJzEDg_n7JdzOb5';
 const SB_TABLE='links_data';
 const SB_WRITE_TOKEN='lbd_wt_k9x2m7p4q1r8';
+const OGIMAGE_API='https://lbd-ogimage-api.vercel.app/api/ogimage';
 
 const SOCIAL_DEFS={
   instagram:{label:'Instagram',ph:'https://instagram.com/lunchboxdad',icon:'<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke-width="2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2.5"/></svg>'},
@@ -908,50 +909,30 @@ async function autoFetchThumb(){
     return null;
   }
 
-  // Method 1: allorigins.win JSON (most reliable, returns JSON wrapper)
+  // Method 1: Our own Vercel function (most reliable — server-side, no CORS limits)
+  async function tryVercelAPI(){
+    const r=await fetch(`${OGIMAGE_API}?url=${encodeURIComponent(url)}`,{signal:AbortSignal.timeout(12000)});
+    if(!r.ok) throw new Error('status '+r.status);
+    const d=await r.json();
+    return d.image||null;
+  }
+
+  // Method 2: allorigins.win JSON fallback
   async function tryAllOriginsJSON(){
-    const r=await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,{signal:AbortSignal.timeout(8000)});
-    if(!r.ok) throw new Error('bad status');
+    const r=await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,{signal:AbortSignal.timeout(9000)});
+    if(!r.ok) throw new Error('status '+r.status);
     const d=await r.json();
-    const txt=d.contents||'';
-    // Debug: log what we got
-    const ogIdx=txt.indexOf('og:image');
-    const bloggerIdx=txt.indexOf('blogger.googleusercontent');
-    console.log('[AutoFetch] Page length:',txt.length,'og:image at:',ogIdx,'blogger CDN at:',bloggerIdx);
-    if(ogIdx>-1) console.log('[AutoFetch] og:image context:',txt.substring(ogIdx-5,ogIdx+200));
-    return extractOgImage(txt);
+    return extractOgImage((d&&d.contents)?d.contents:'');
   }
 
-  // Method 2: corsproxy.io
-  async function tryCorsProxyIO(){
-    const r=await fetch(`https://corsproxy.io/?url=${encodeURIComponent(url)}`,{signal:AbortSignal.timeout(8000)});
-    if(!r.ok) throw new Error('bad status');
-    return extractOgImage(await r.text());
-  }
-
-  // Method 3: allorigins.win raw
+  // Method 3: allorigins.win raw fallback
   async function tryAllOriginsRaw(){
-    const r=await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,{signal:AbortSignal.timeout(8000)});
-    if(!r.ok) throw new Error('bad status');
+    const r=await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,{signal:AbortSignal.timeout(9000)});
+    if(!r.ok) throw new Error('status '+r.status);
     return extractOgImage(await r.text());
   }
 
-  // Method 4: codetabs proxy
-  async function tryCodetabs(){
-    const r=await fetch(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,{signal:AbortSignal.timeout(8000)});
-    if(!r.ok) throw new Error('bad status');
-    return extractOgImage(await r.text());
-  }
-
-  // Method 5: htmlpreview.github.io proxy
-  async function tryHtmlPreview(){
-    const r=await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://htmlpreview.github.io/?'+url)}`,{signal:AbortSignal.timeout(8000)});
-    if(!r.ok) throw new Error('bad status');
-    const d=await r.json();
-    return extractOgImage(d.contents||'');
-  }
-
-  const methods=[tryAllOriginsJSON, tryCorsProxyIO, tryAllOriginsRaw, tryCodetabs, tryHtmlPreview];
+  const methods=[tryVercelAPI, tryAllOriginsJSON, tryAllOriginsRaw];
   let found=false;
 
   for(const method of methods){

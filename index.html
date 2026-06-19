@@ -212,6 +212,12 @@ textarea.field-input{resize:vertical;min-height:70px;line-height:1.5;}
 .drag-handle:hover{color:var(--burg);}
 .drag-handle svg{width:17px;height:17px;display:block;}
 .drag-handle:active{cursor:grabbing;}
+.reorder-btns{display:flex;flex-direction:column;gap:2px;flex-shrink:0;}
+.reorder-btn{width:26px;height:17px;border:1px solid var(--cream-border);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;color:var(--ink-lt);transition:all .12s;border-radius:2px;}
+.reorder-btn:hover:not(:disabled){color:var(--burg);border-color:var(--burg);background:var(--burg-lt);}
+.reorder-btn:active:not(:disabled){transform:scale(.9);}
+.reorder-btn:disabled{opacity:.25;cursor:not-allowed;}
+.reorder-btn svg{width:13px;height:13px;display:block;}
 .social-icon-badge{width:30px;height:30px;background:var(--cream-dk);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .social-icon-badge svg{width:15px;height:15px;color:var(--ink-mid);}
 .social-name{font-size:12px;font-weight:700;color:var(--ink);width:76px;flex-shrink:0;font-family:'Outfit',sans-serif;}
@@ -422,7 +428,7 @@ The Lunchbox Dad</textarea>
       <div class="admin-section-title">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
         Social profiles
-        <span class="admin-section-hint">(drag to reorder · toggle to show/hide)</span>
+        <span class="admin-section-hint">(use arrows to reorder · toggle to show/hide)</span>
       </div>
     </div>
     <div id="social-admin-list"></div>
@@ -439,7 +445,7 @@ The Lunchbox Dad</textarea>
       <div class="admin-section-title">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/></svg>
         Links
-        <span class="admin-section-hint">(drag to reorder · toggle to show/hide)</span>
+        <span class="admin-section-hint">(use arrows to reorder · toggle to show/hide)</span>
       </div>
       <button class="btn-burg-sm" onclick="openAddLink()">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
@@ -792,7 +798,10 @@ function renderAdminSocials(){
     row.className='drag-row';row.draggable=true;row.dataset.idx=idx;row.dataset.list='social';
     const vis=data.socialVisible[key]!==false;
     row.innerHTML=`
-      <div class="drag-handle" title="Drag to reorder"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"/></svg></div>
+      <div class="reorder-btns">
+        <button class="reorder-btn" onclick="moveSocial(${idx},-1)" ${idx===0?'disabled':''} title="Move up"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7"/></svg></button>
+        <button class="reorder-btn" onclick="moveSocial(${idx},1)" ${idx===data.socialOrder.length-1?'disabled':''} title="Move down"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></button>
+      </div>
       <div class="social-icon-badge">${def.icon}</div>
       <div class="social-name">${def.label}</div>
       <input class="social-admin-input" id="social-input-${key}" type="text" placeholder="${def.ph}" value="${data.socialValues[key]||''}" oninput="autoSaveSocial('${key}')">
@@ -817,7 +826,10 @@ function renderAdminLinks(){
       ?`<div class="link-admin-thumb"><img src="${link.thumb}" alt=""></div>`
       :`<div class="link-admin-thumb">${getTypeIcon(link.type).replace(/width:22px;height:22px/g,'width:16px;height:16px')}</div>`;
     item.innerHTML=`
-      <div class="drag-handle" title="Drag to reorder"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"/></svg></div>
+      <div class="reorder-btns">
+        <button class="reorder-btn" onclick="moveLink(${idx},-1)" ${idx===0?'disabled':''} title="Move up"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7"/></svg></button>
+        <button class="reorder-btn" onclick="moveLink(${idx},1)" ${idx===data.links.length-1?'disabled':''} title="Move down"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></button>
+      </div>
       ${thumbHtml}
       <div class="link-admin-info">
         <div class="link-admin-title">${link.title}</div>
@@ -837,7 +849,23 @@ function renderAdminLinks(){
 function toggleLinkVisible(idx){data.links[idx].visible=!data.links[idx].visible;cloudSaveAll();renderAdminLinks();renderPublic();}
 function deleteLink(idx){if(!confirm('Delete "'+data.links[idx].title+'"?'))return;data.links.splice(idx,1);cloudSaveAll();renderAdminLinks();renderPublic();showToast('Link deleted');}
 
-/* ── DRAG & DROP ── */
+/* ── REORDER (arrow buttons — works on touch + desktop) ── */
+function moveLink(idx,dir){
+  const ni=idx+dir;
+  if(ni<0||ni>=data.links.length)return;
+  const m=data.links.splice(idx,1)[0];
+  data.links.splice(ni,0,m);
+  cloudSaveAll();renderAdminLinks();renderPublic();
+}
+function moveSocial(idx,dir){
+  const ni=idx+dir;
+  if(ni<0||ni>=data.socialOrder.length)return;
+  const m=data.socialOrder.splice(idx,1)[0];
+  data.socialOrder.splice(ni,0,m);
+  cloudSaveAll();renderAdminSocials();renderPublic();
+}
+
+/* ── DRAG & DROP (desktop bonus) ── */
 function bindDrag(el,listName,idx){
   el.addEventListener('dragstart',e=>{dragSrc=idx;dragList=listName;setTimeout(()=>el.classList.add('dragging'),0);e.dataTransfer.effectAllowed='move';});
   el.addEventListener('dragend',()=>{el.classList.remove('dragging');document.querySelectorAll('.drag-over').forEach(r=>r.classList.remove('drag-over'));});
